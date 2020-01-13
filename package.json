@@ -5,9 +5,10 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "postinstall": "tsc --sourceMap false",
+    "start": "node dist/main.js",
     "prebuild": "rimraf dist",
     "build": "nest build",
-    "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
