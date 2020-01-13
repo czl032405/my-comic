@@ -78,5 +78,6 @@ export class CronService {
       console.info(`Cron Finish Sync Comic ${comic.title} Ep ${order}`);
       return result;
     }
+    return [];
   }
 }
