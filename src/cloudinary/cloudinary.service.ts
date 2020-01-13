@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { Media } from "src/pica/pica.interface";
+import { Media } from "../pica/pica.interface";
 
 @Injectable()
 export class CloudinarySerivice {

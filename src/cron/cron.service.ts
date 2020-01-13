@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { PicaService } from "src/pica/pica.service";
-import { CloudinarySerivice } from "src/cloudinary/cloudinary.service";
+import { PicaService } from "../pica/pica.service";
+import { CloudinarySerivice } from "../cloudinary/cloudinary.service";
 import { PromisePool } from "promise-pool-tool";
-import { Media, Ep } from "src/pica/pica.interface";
+import { Media, Ep } from "../pica/pica.interface";
 @Injectable()
 export class CronService {
   constructor(private readonly picaService: PicaService, private readonly cloudindaryService: CloudinarySerivice) {}
