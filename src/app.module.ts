@@ -11,6 +11,7 @@ import { CronController } from "./cron/cron.controller";
 import { CronService } from "./cron/cron.service";
 import { TestController } from "./test/test.controller";
 import { CloudinaryController } from "./cloudinary/cloudinary.controller";
+import "./lib/axios-proxy-fix";
 
 @Module({
   imports: [ConfigModule.forRoot()],
