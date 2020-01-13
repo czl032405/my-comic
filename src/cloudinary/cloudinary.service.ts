@@ -70,7 +70,8 @@ export class CloudinarySerivice {
       let names = result.folders.map(r => r.name);
       return names;
     } catch (error) {
-      if (/"Can't find folder/.test(error.message)) {
+      console.error(error);
+      if (/Can't find folder/.test(error.error && error.error.message)) {
         return [];
       }
       throw error;
@@ -80,11 +81,11 @@ export class CloudinarySerivice {
   async syncMedia(comicName: string, epName: string, media: Media) {
     let url = `${media.fileServer}/static/${media.path}`;
     let targetPath = `${comicName}/${epName}/${media.originalName}`;
-    let localPath = await this.downloadTmpFile(url, null, "pica");
-    console.info(`Download ${localPath}`);
-    let ext = path.extname(localPath);
+    // let localPath = await this.downloadTmpFile(url, null, "pica");
+    // console.info(`Download ${localPath}`);
+    let ext = path.extname(targetPath);
     let public_id = targetPath.replace(ext, "");
-    let result = await cloudinary.v2.uploader.upload(localPath, {
+    let result = await cloudinary.v2.uploader.upload(url, {
       public_id
     });
     console.info(`Upload ${public_id}`);

@@ -5,12 +5,17 @@ import { PromisePool } from "promise-pool-tool";
 import { Media, Ep } from "../pica/pica.interface";
 @Injectable()
 export class CronService {
+  private ignore: string[] = [
+    //
+    "平行天堂"
+  ];
+
   constructor(private readonly picaService: PicaService, private readonly cloudindaryService: CloudinarySerivice) {}
 
   async syncComics() {
     console.info(`Cron Begin Sync Comics`);
     let comicsResult = await this.picaService.comics({ page: 1, s: "dd", c: "禁書目錄" });
-    let comics = comicsResult.data.comics.docs;
+    let comics = comicsResult.data.comics.docs.filter(doc => !this.ignore.find(i => new RegExp(i, "i").test(doc.title)));
     let tasks = await comics.map(doc => async () => {
       let result = await this.syncComic(doc._id);
       return result;
@@ -34,7 +39,6 @@ export class CronService {
     let promisePool = new PromisePool(tasks, { throwError: false, concurrency: 1 });
     let result = await promisePool.start();
     console.info(`Cron Finish Sync Comic ${comic.title}`);
-
     return result;
   }
 
@@ -52,7 +56,7 @@ export class CronService {
       let epResult = await this.picaService.ep(comicId, order, { page });
       ep = epResult.data.ep;
       pages = epResult.data.pages.pages;
-      page = epResult.data.pages.page;
+      page = epResult.data.pages.page + 1;
       medias = medias.concat(epResult.data.pages.docs.map(doc => doc.media));
       tryCount++;
     }
