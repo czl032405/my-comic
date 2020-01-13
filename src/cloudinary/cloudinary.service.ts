@@ -86,6 +86,19 @@ export class CloudinarySerivice {
     let ext = path.extname(targetPath);
     let public_id = targetPath.replace(ext, "");
     let result = await cloudinary.v2.uploader.upload(url, {
+      public_id,
+      headers: {
+        "cache-control": "max-age=233333333"
+      }
+    });
+    console.info(`Upload ${public_id}`);
+    return result.url;
+  }
+
+  async uploadTest() {
+    let url = "https://res.cloudinary.com/hhzmmikpx/image/upload/v1578919624/%E5%B9%B3%E8%A1%8C%E5%A4%A9%E5%A0%82%EF%BC%88%E8%A1%A5%E6%A1%A3%EF%BC%89/%E7%AC%AC2%E9%9B%86/0173_1.jpg";
+    let public_id = `测试/${Math.floor(Math.random() * 1000)}`;
+    let result = await cloudinary.v2.uploader.upload(url, {
       public_id
     });
     console.info(`Upload ${public_id}`);

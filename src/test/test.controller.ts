@@ -17,4 +17,10 @@ export class TestController {
     let result = await this.cloudinaryService.syncMedia("测试", "第一集", media);
     return result;
   }
+
+  @Get("/upload")
+  async upload() {
+    let result = await this.cloudinaryService.uploadTest();
+    return result;
+  }
 }
