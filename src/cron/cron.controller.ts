@@ -1,9 +1,13 @@
 import { Controller, Query, Get } from "@nestjs/common";
 import { CronService } from "./cron.service";
+import { CloudinarySerivice } from "../cloudinary/cloudinary.service";
 
 @Controller("/crons")
 export class CronController {
-  constructor(private readonly cronService: CronService) {}
+  constructor(
+    //
+    private readonly cronService: CronService
+  ) {}
 
   @Get("/syncComics")
   async syncComics() {

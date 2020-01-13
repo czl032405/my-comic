@@ -8,6 +8,7 @@ export class CronService {
   constructor(private readonly picaService: PicaService, private readonly cloudindaryService: CloudinarySerivice) {}
 
   async syncComics() {
+    console.info(`Cron Begin Sync Comics`);
     let comicsResult = await this.picaService.comics({ page: 1, s: "dd", c: "禁書目錄" });
     let comics = comicsResult.data.comics.docs;
     let tasks = await comics.map(doc => async () => {
@@ -16,12 +17,14 @@ export class CronService {
     });
     let promisePool = new PromisePool(tasks, { throwError: false, concurrency: 1 });
     let result = await promisePool.start();
+    console.info(`Cron Finish Sync Comics`);
     return result;
   }
 
   async syncComic(comicId: string) {
     let comicResult = await this.picaService.comic(comicId);
     let comic = comicResult.data.comic;
+    console.info(`Cron Begin Sync Comic ${comic.title}`);
     let cloudEps = await this.cloudindaryService.listEps(comic.title);
     let taskNumber = comic.epsCount - cloudEps.length;
     let tasks = await Array.from({ length: taskNumber }).map((num, index) => async () => {
@@ -30,12 +33,15 @@ export class CronService {
     });
     let promisePool = new PromisePool(tasks, { throwError: false, concurrency: 1 });
     let result = await promisePool.start();
+    console.info(`Cron Finish Sync Comic ${comic.title}`);
+
     return result;
   }
 
   async syncEp(comicId: string, order: number): Promise<string[]> {
     let comicResult = await this.picaService.comic(comicId);
     let comic = comicResult.data.comic;
+    console.info(`Cron Begin Sync Comic ${comic.title} Ep ${order}`);
     let pages = 20;
     let page = 1;
     let medias: Media[] = [];
@@ -51,12 +57,13 @@ export class CronService {
       tryCount++;
     }
     let tasks = medias.map(meida => async () => {
-      let url = await this.cloudindaryService.downloadMeida(comic.title, ep.title, meida);
+      let url = await this.cloudindaryService.syncMedia(comic.title, ep.title, meida);
       return url;
     });
 
     let promisePool = new PromisePool(tasks, { throwError: false, concurrency: 20 });
     let result = await promisePool.start();
+    console.info(`Cron Finish Sync Comic ${comic.title} Ep ${order}`);
     return result;
   }
 }
