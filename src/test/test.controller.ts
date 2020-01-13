@@ -1,6 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
 import { CloudinarySerivice } from "../cloudinary/cloudinary.service";
 import { PicaService } from "../pica/pica.service";
+import { PromisePool } from "promise-pool-tool";
 
 @Controller("/test")
 export class TestController {
@@ -21,6 +22,13 @@ export class TestController {
   @Get("/upload")
   async upload() {
     let result = await this.cloudinaryService.uploadTest();
+    return result;
+  }
+
+  @Get("/promise-pool")
+  async promisePool() {
+    let promisePool = new PromisePool([async function() {}], { throwError: false, concurrency: 1 });
+    let result = await promisePool.start();
     return result;
   }
 }
