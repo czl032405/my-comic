@@ -86,10 +86,10 @@ export class CloudinarySerivice {
     let ext = path.extname(targetPath);
     let public_id = targetPath.replace(ext, "");
     let result = await cloudinary.v2.uploader.upload(url, {
-      public_id,
-      headers: {
-        "cache-control": "max-age=233333333"
-      }
+      public_id
+      // headers: {
+      //   "cache-control": "max-age=233333333"
+      // }
     });
     console.info(`Upload ${public_id}`);
     return result.url;
