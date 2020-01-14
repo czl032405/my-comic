@@ -1,16 +1,16 @@
 {
-  "miniprogramRoot": "packages/my-comic-mp/",
-  "cloudfunctionRoot": "packages/my-comic-serverless/",
-  "setting": {
-    "urlCheck": true,
-    "minified": true,
-    "newFeature": true,
-    "enhance": true
-  },
-  "appid": "wx33e12a9239f437af",
-  "projectname": "my-comic",
-  "libVersion": "2.8.1",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {}
+	"miniprogramRoot": "packages/my-comic-mp/",
+	"cloudfunctionRoot": "packages/my-comic-serverless/dist/",
+	"setting": {
+		"urlCheck": true,
+		"minified": true,
+		"newFeature": true,
+		"enhance": true
+	},
+	"appid": "wx33e12a9239f437af",
+	"projectname": "my-comic",
+	"libVersion": "2.8.1",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {}
 }

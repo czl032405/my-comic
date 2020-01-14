@@ -1,0 +1,21 @@
+{
+  "name": "my-comic-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "node copy-dist-file",
+    "build": "npm run clean && tsc --sourceMap false --declaration false",
+    "dev": "npm run clean && tsc --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "copy-dir": "^1.2.0",
+    "del": "^5.1.0",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {
+    "wx-server-sdk": "^1.8.0"
+  }
+}
