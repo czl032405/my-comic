@@ -16,7 +16,7 @@ export class CloudinarySerivice {
     // fix for must supply api_key error
     cloudinary.v2.config(true);
   }
-  private async downloadTmpFile(url: string, ext?: string, folder?: string) {
+  async downloadTmpFile(url: string, ext?: string, folder?: string) {
     let response = await Axios({
       method: "get",
       url,
@@ -33,12 +33,12 @@ export class CloudinarySerivice {
     }
 
     fileName = fileName.trim().replace(/\?.*/, "");
-    if (!path.extname(fileName)) {
+    if (ext && !path.extname(fileName)) {
       ext = "." + ext.replace(/\./, "");
       fileName = fileName + ext;
     }
 
-    let targetDir = path.resolve(this.tempDir, folder || undefined);
+    let targetDir = path.resolve(this.tempDir, folder || "");
 
     !fs.existsSync(targetDir) && fs.mkdirSync(targetDir);
 
@@ -54,6 +54,7 @@ export class CloudinarySerivice {
         resolve(filePath);
       });
       response.data.on("error", err => {
+        console.info(`download error`, err);
         reject(err);
       });
     });

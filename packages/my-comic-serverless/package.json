@@ -16,6 +16,7 @@
     "typescript": "^3.7.4"
   },
   "dependencies": {
+    "axios": "^0.19.1",
     "wx-server-sdk": "^1.8.0"
   }
 }

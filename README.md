@@ -8,6 +8,13 @@ nestjs, pica api, cloudinary, heroku
 - [ ] my-comic-server / add api to proxy loading pica image
 - [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
 
+## deploy heroku
+
+```s
+git subtree push --prefix packages/my-comic-server origin heroku
+
+```
+
 ## lerna commands
 
 ```s
