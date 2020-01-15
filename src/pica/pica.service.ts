@@ -1,9 +1,10 @@
 import { Injectable, Param } from "@nestjs/common";
 import * as crypto from "crypto";
-import Axios, { Method } from "axios";
+import Axios, { Method, AxiosPromise } from "axios";
 import * as uuidv4 from "uuid/v4";
 import * as qs from "querystring";
-import { ComicsResult, ComicResult, EpResult, EpsResult } from "./pica.interface";
+import { ComicsResult, ComicResult, EpResult, EpsResult, Media } from "./pica.interface";
+import { Stream, Readable } from "stream";
 
 @Injectable()
 export class PicaService {
