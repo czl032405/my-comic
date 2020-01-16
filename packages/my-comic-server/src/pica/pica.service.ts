@@ -199,10 +199,10 @@ export class PicaService {
     }
     let image = await Jimp.read(url);
     let width = await image.getWidth();
-    if (width > 500) {
-      image = await image.scaleToFit(500, 1500);
+    if (width > 480) {
+      image = await image.scaleToFit(480, 1500);
     }
-    image = await image.quality(60);
+    image = await image.quality(70);
     // image = image.greyscale();
     await image.writeAsync(filepath);
     return filepath;
