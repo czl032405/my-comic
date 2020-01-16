@@ -12,7 +12,7 @@ Nestjs, Pica Api, Cloudinary, Heroku
 
 ## todo
 
-- [ ] my-comic-mp / record reading progress
+- [x] my-comic-mp / record reading progress
 - [ ] my-comic-mp / pagination on comics and eps
 - [ ] my-comic-mp / search
 

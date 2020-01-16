@@ -5,6 +5,8 @@ Page({
     showLoading: false,
     id: "5da89cb3a7ed463faded35fe",
     eps: [],
+    currentOrder: -1,
+    currentIndex: 0,
     page: {
       total: 1,
       pageNo: 1,
@@ -22,6 +24,17 @@ Page({
     }
 
     this.loadEps();
+  },
+
+  onShow() {
+    // reading progress
+    let pica_progress = wx.getStorageSync("pica") || {};
+    let { order = -1, index = 0 } = pica_progress[this.data.id] || {};
+    console.info(order, index);
+    this.setData({
+      currentIndex: +index,
+      currentOrder: +order
+    });
   },
 
   async loadEps() {

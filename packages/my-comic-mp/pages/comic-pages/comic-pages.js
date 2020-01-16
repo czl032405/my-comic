@@ -8,21 +8,22 @@ Page({
     pages: [],
     index: 0,
     workingPages: [],
-    workingIndex: 0
+    workingIndex: 0,
+    workingPagesLength: 4
   },
 
   onLoad(options) {
     console.info("comic-pages.load");
     let { id, order, index } = options;
-    this.setData(Object.assign(this.data, JSON.parse(JSON.stringify({ id, order, index }))));
+    this.setData(Object.assign(this.data, JSON.parse(JSON.stringify({ id, order: +order, index: +index }))));
     this.loadPages();
   },
 
   setPicaProgress() {
     let pica_progress = wx.getStorageSync("pica") || {};
     pica_progress[this.data.id] = {
-      order: this.data.order,
-      index: this.data.index
+      order: +this.data.order,
+      index: +this.data.index
     };
     wx.setStorageSync("pica", pica_progress);
   },
@@ -56,7 +57,7 @@ Page({
     let preloadWorkingIndex = null;
     let preloadIndex2 = null;
     let preloadWorkingIndex2 = null;
-    const workingPagesLength = 4;
+    let workingPagesLength = this.data.workingPagesLength;
     workingIndex = current;
 
     // next
@@ -78,6 +79,9 @@ Page({
       preloadWorkingIndex2 = (workingIndex - 2 + workingPagesLength) % workingPagesLength;
     } else if (movedIndex == 0) {
       console.info("init");
+      this.setData({
+        workingPages: new Array(4)
+      });
       index = (index + pages.length) % pages.length;
       preloadIndex = (index + 1 + pages.length) % pages.length;
       preloadWorkingIndex = (workingIndex + 1 + workingPagesLength) % workingPagesLength;

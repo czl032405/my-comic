@@ -1,7 +1,7 @@
 <view>
   <view style="display:flex; flex-wrap:wrap;margin-bottom:20rpx">
-    <navigator url="{{'/pages/comic-pages/comic-pages?id='+id+'&order='+ (page.total- ((page.pageNo-1)*40+index))}}" wx:key='index' wx:for='{{eps}}' wx:for-item='ep'>
-      <button size='mini' style="background:rgba(0,0,0,0.01);color:grey;font-weight:100;font-size:30rpx;margin:10rpx">
+    <navigator url="{{'/pages/comic-pages/comic-pages?id='+id+'&order='+ (page.total- ((page.pageNo-1)*40+index))+'&index='+(currentOrder== (page.total- ((page.pageNo-1)*40+index))?currentIndex:0)}}" wx:key='index' wx:for='{{eps}}' wx:for-item='ep'>
+      <button size='mini' style="background:{{currentOrder== (page.total- ((page.pageNo-1)*40+index))?'rgba(0,0,0,0.3)':'rgba(0,0,0,0.01)'}};color:{{currentOrder== (page.total- ((page.pageNo-1)*40+index))?'purple':'grey'}};font-weight:{{currentOrder== (page.total- ((page.pageNo-1)*40+index))?'700':'100'}};font-size:30rpx;margin:10rpx">
         {{ep.title}}
       </button>
     </navigator>
