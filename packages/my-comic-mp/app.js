@@ -15,5 +15,7 @@ App({
     }
 
     this.globalData = {};
+    let pica_progress = wx.getStorageSync("pica") || {};
+    wx.setStorageSync("pica", pica_progress);
   }
 });

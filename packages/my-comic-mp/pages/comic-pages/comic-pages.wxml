@@ -1,14 +1,12 @@
 <view>
   <view wx:if='{{pages.length}}'>
-    <swiper circular="{{true}}" bindchange='onSwiperChange' style='width:100vw;height:100vh;background:rgba(0,0,0,0.8)'>
+    <swiper current="{{workingIndex}}" circular="{{true}}" bindchange='onSwiperChange' style='width:100vw;height:100vh;background:rgba(0,0,0,0.8)'>
       <swiper-item wx:for="{{workingPages}}" wx:for-item="page" wx:key='index'>
         <image src='{{page}}' mode="aspectFit" style='width:100%;height:100%'></image>
       </swiper-item>
     </swiper>
   </view>
-  <view style='position:fixed;bottom:0;right:0;color:white'>
-    {{workingIndex+1}}/{{pages.length}}
-  </view>
+  <view style='position:fixed;bottom:0;right:0;color:white'>{{index+1}}/{{pages.length}}</view>
   <mp-loading show='{{showLoading}}'></mp-loading>
 </view>
 <wxs module='m' src='../../filters.wxs'></wxs>
