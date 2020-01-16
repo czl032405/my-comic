@@ -195,7 +195,7 @@ export class PicaService {
 
     if (fs.existsSync(filepath) && fs.statSync(filepath).size > 10 && !reload) {
       console.info(`cached ${url}`);
-      // return filepath;
+      return filepath;
     }
     let image = await Jimp.read(url);
     let width = await image.getWidth();
