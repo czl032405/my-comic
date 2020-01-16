@@ -1,11 +1,23 @@
 ## my-comic-server
 
-nestjs, pica api, cloudinary, heroku
+Nestjs, Pica Api, Cloudinary, Heroku
+
+## my-comic-mp
+
+微信小程序
+
+## my-comic-serverless
+
+微信云开发
 
 ## todo
 
+- [ ] my-comic-mp / pagination on comics and eps
+- [ ] my-comic-mp / search
+
+- [x] my-comic-server / add api to proxy loading pica image
+- [ ] my-comic-server / gzip & zip image
 - [ ] my-comic-server / use github action to only deploy dist files
-- [ ] my-comic-server / add api to proxy loading pica image
 - [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
 
 ## project commands
@@ -19,7 +31,7 @@ lerna run build --parallel
 
 ```
 
-## deploy heroku
+## deploy server on heroku
 
 ```s
 git subtree push --prefix packages/my-comic-server origin heroku
