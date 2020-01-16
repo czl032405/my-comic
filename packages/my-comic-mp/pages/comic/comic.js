@@ -40,12 +40,12 @@ Page({
         method: `comics/${this.data.id}/alleps`
       }
     });
-    if (fResult.result.code == 200) {
-      let eps = fResult.result;
-      this.setData({
-        eps
-      });
-    }
+
+    let eps = fResult.result;
+    this.setData({
+      eps
+    });
+
     this.setData({ showLoading: false });
   }
 });
