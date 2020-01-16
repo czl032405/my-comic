@@ -4,7 +4,10 @@ import Axios, { Method, AxiosPromise } from "axios";
 import * as uuidv4 from "uuid/v4";
 import * as qs from "querystring";
 import { ComicsResult, ComicResult, EpResult, EpsResult, Media, Ep } from "./pica.interface";
-import { Stream, Readable } from "stream";
+import * as path from "path";
+import * as os from "os";
+import * as Jimp from "jimp";
+import * as fs from "fs";
 
 @Injectable()
 export class PicaService {
@@ -182,5 +185,26 @@ export class PicaService {
     let url = `comics/advanced-search`;
     let response = await this.request(url, "POST", { params: { page }, data: { keyword, sort } });
     return response.data;
+  }
+
+  async getImage(url: string, reload: boolean = false) {
+    url = url.replace(/static\/static/, "static");
+    const tempDir = path.resolve(os.tmpdir(), "my-comic");
+    let fileName = path.basename(url);
+    let filepath = path.resolve(tempDir, fileName);
+
+    if (fs.existsSync(filepath) && fs.statSync(filepath).size > 10 && !reload) {
+      console.info(`cached ${url}`);
+      // return filepath;
+    }
+    let image = await Jimp.read(url);
+    let width = await image.getWidth();
+    if (width > 500) {
+      image = await image.scaleToFit(500, 1500);
+    }
+    image = await image.quality(60);
+    // image = image.greyscale();
+    await image.writeAsync(filepath);
+    return filepath;
   }
 }
