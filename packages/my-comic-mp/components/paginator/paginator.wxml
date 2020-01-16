@@ -1,0 +1,7 @@
+<view>
+  <button size='mini'>1</button>
+  <button size='mini'>2</button>
+  <button size='mini'>3</button>
+  <button size='mini'>4</button>
+  <button size='mini'>5</button>
+</view>

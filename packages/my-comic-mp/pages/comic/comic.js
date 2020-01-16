@@ -6,12 +6,7 @@ Page({
     id: "5da89cb3a7ed463faded35fe",
     eps: [],
     currentOrder: -1,
-    currentIndex: 0,
-    page: {
-      total: 1,
-      pageNo: 1,
-      totalPage: 1
-    }
+    currentIndex: 0
   },
 
   onLoad(options) {
@@ -42,17 +37,13 @@ Page({
     let fResult = await wx.cloud.callFunction({
       name: "pica",
       data: {
-        method: `comics/${this.data.id}/eps`
+        method: `comics/${this.data.id}/alleps`
       }
     });
     if (fResult.result.code == 200) {
-      let eps = fResult.result.data.eps.docs;
-      let totalPage = fResult.result.data.eps.pages;
-      let pageNo = fResult.result.data.eps.page;
-      let total = fResult.result.data.eps.total;
+      let eps = fResult.result;
       this.setData({
-        eps,
-        page: { totalPage, pageNo, total }
+        eps
       });
     }
     this.setData({ showLoading: false });
