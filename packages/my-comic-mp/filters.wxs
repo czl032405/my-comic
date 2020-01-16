@@ -1,0 +1,19 @@
+module.exports.getSortName = function(s) {
+  return {
+    ua: "默认排序",
+    dd: "新到旧",
+    da: "旧到新",
+    ld: "最多爱心",
+    vd: "最多指名"
+  }[s];
+};
+
+module.exports.getMediaUrl = function(media) {
+  //console.info("https://my-comic.herokuapp.com/pica/image?url="+media.fileServer+"/static/"+media.path);
+  return (
+    "https://my-comic.herokuapp.com/pica/image?url=" +
+    media.fileServer +
+    "/static/" +
+    media.path
+  );
+};

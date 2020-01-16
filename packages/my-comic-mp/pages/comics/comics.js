@@ -2,15 +2,21 @@ const app = getApp();
 
 Page({
   data: {
+    showLoading: false,
     page: 1,
     s: "dd",
+    t: null,
+    c: "禁書目錄",
+    k: null,
     comics: []
   },
 
   onLoad: function(options) {
     console.info("comics.load");
     let { t, c, k } = options;
-    // this.loadComics({ t, c, k });
+    this.setData(Object.assign(this.data, { t, c, k }));
+
+    this.loadComics();
   },
 
   /**
@@ -27,10 +33,10 @@ Page({
    *  ld: 最多爱心
    *  vd: 最多指名
    */
-  async loadComics(params) {
-    let { t, c = "禁書目錄", k } = params;
-    let { page, s } = this.data;
+  async loadComics() {
+    let { page, s, t, c, k } = this.data;
     console.info(t, c, k, page, s);
+    this.setData({ showLoading: true });
     let method = k ? "search" : "comics";
     let fResult = await wx.cloud.callFunction({
       name: "pica",
@@ -47,15 +53,19 @@ Page({
     });
     let comics = fResult.result.data.comics.docs;
     this.setData({
-      comics
+      comics,
+      showLoading: false
     });
 
     console.info(fResult);
   },
 
   onSortPick(e) {
+    let s = ["ua", "dd", "da", "ld", "vd"][e.detail.value];
     this.setData({
-      s: ["ua", "dd", "da", "ld", "vd"][e.detail.value]
+      s
     });
+
+    this.loadComics();
   }
 });
