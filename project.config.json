@@ -3,9 +3,22 @@
 	"cloudfunctionRoot": "packages/my-comic-serverless/dist/",
 	"setting": {
 		"urlCheck": true,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"enhance": true
+		"coverView": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"appid": "wx33e12a9239f437af",
 	"projectname": "my-comic",

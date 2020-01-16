@@ -2,7 +2,8 @@ import { Controller, Get, Param, Query, All, Body, Res } from "@nestjs/common";
 import { PicaService } from "./pica.service";
 import { Response } from "express";
 import { CloudinarySerivice } from "../cloudinary/cloudinary.service";
-
+import * as path from "path";
+import * as fs from "fs";
 @Controller("/pica")
 export class PicaController {
   constructor(
@@ -26,6 +27,11 @@ export class PicaController {
     return this.picaService.comics(query);
   }
 
+  @Get("/comics/search")
+  search(@Query() query) {
+    return this.picaService.search(query);
+  }
+
   @Get("/comics/:id")
   comic(@Param("id") id: string) {
     return this.picaService.comic(id);
@@ -43,9 +49,20 @@ export class PicaController {
 
   @Get("/image")
   async getImage(@Query("url") url: string, @Res() res: Response) {
-    url = url.replace(/static\/static/, "static");
-    let filePath = await this.cloudinary.downloadTmpFile(url);
-    console.info(filePath);
-    res.sendFile(filePath);
+    if (url) {
+      res.header("Cache-Control", "max-age=2333333333");
+      url = url.replace(/static\/static/, "static");
+      let fileName = path.basename(url);
+      let tempPath = path.resolve(this.cloudinary.tempDir, fileName);
+      if (fs.existsSync(tempPath)) {
+        return res.sendFile(tempPath);
+      }
+
+      let filePath = await this.cloudinary.downloadTmpFile(url);
+
+      return res.sendFile(filePath);
+    } else {
+      res.end();
+    }
   }
 }

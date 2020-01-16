@@ -3,5 +3,10 @@
   "private": true,
   "devDependencies": {
     "lerna": "^3.20.2"
+  },
+  "scripts": {
+    "dev:server": "lerna run --scope *server  dev --parallel",
+    "dev:serverless": "lerna run --scope *serverless  dev --parallel",
+    "build": "lerna run build --parallel"
   }
 }

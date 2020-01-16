@@ -1,0 +1,38 @@
+<view>
+  <view style="display:flex; flex-wrap:wrap;margin-bottom:20rpx">
+    <navigator wx:key='{{index}}' wx:for='{{comics}}' wx:for-item='comic'>
+      <view style='width:250rpx;height:250rpx;position:relative'>
+        <image mode='aspectFill' wx:if='{{comic.thumb}}' style='width:250rpx;height:250rpx' src="{{m.getMediaUrl(comic.thumb)}}"></image>
+        <view style='width:100%;bottom:0;background:rgba(0,0,0,0.5);color:white'>
+          {{comic.title}}
+        </view>
+      </view>
+    </navigator>
+  </view>
+  <view style='display:flex;justify-content:space-between;'>
+    <view>分页</view>
+    <picker bindchange="onSortPick" value="{{1}}" range="{{['默认排序','新到旧','旧到新','最多爱心','最多指名']}}">
+      <button size='mini' style="background:white;color:grey;font-weight:100">
+        {{m.getSortName(s)}}
+      </button>
+    </picker>
+  </view>
+</view>
+<wxs module='m'>
+  module.exports.getSortName = function(s){
+    return  {
+      ua: "默认排序",
+      dd: "新到旧",
+      da: "旧到新",
+      ld: "最多爱心",
+      vd: "最多指名"
+    }[s];
+  }
+
+  module.exports.getMediaUrl = function(media){
+    //console.info("https://my-comic.herokuapp.com/pica/image?url="+media.fileServer+"/static/"+media.path);
+    return "https://my-comic.herokuapp.com/pica/image?url="+media.fileServer+"/static/"+media.path;
+    
+    
+  }
+</wxs>

@@ -9,7 +9,7 @@ import * as fs from "fs";
 
 @Injectable()
 export class CloudinarySerivice {
-  private tempDir = path.resolve(os.tmpdir(), "my-comic");
+  public tempDir = path.resolve(os.tmpdir(), "my-comic");
 
   constructor() {
     !fs.existsSync(this.tempDir) && fs.mkdirSync(this.tempDir);

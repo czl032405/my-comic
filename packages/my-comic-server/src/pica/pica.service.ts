@@ -158,4 +158,11 @@ export class PicaService {
     let response = await this.request(url, "GET", { params });
     return response.data;
   }
+
+  async search(params: { keyword: string; sort: string; page?: number } = { keyword: "", sort: "ua" }): Promise<ComicsResult> {
+    let { keyword, sort = "ua", page = 1 } = params;
+    let url = `comics/advanced-search`;
+    let response = await this.request(url, "POST", { params: { page }, data: { keyword, sort } });
+    return response.data;
+  }
 }
