@@ -4,7 +4,7 @@ Nestjs, Pica Api, Cloudinary, Heroku
 
 ## my-comic-mp
 
-微信小程序
+微信小程序, weui
 
 ## my-comic-serverless
 
@@ -16,7 +16,7 @@ Nestjs, Pica Api, Cloudinary, Heroku
 - [ ] my-comic-mp / search
 
 - [x] my-comic-server / add api to proxy loading pica image
-- [ ] my-comic-server / gzip & zip image
+- [x] my-comic-server / gzip & zip image
 - [ ] my-comic-server / use github action to only deploy dist files
 - [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
 
