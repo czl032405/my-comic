@@ -42,6 +42,11 @@ export class PicaController {
     return this.picaService.eps(id, query);
   }
 
+  @Get("/comics/:id/alleps")
+  alleps(@Param("id") id: string, @Query() query) {
+    return this.picaService.allEps(id);
+  }
+
   @Get("/comics/:id/eps/:order")
   pages(@Param("id") id: string, @Param("order") order: string, @Query() query) {
     return this.picaService.ep(id, +order, query);

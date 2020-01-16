@@ -75,7 +75,7 @@ interface Comic {
   commentsCount: number;
 }
 
-interface EpsDoc {
+export interface EpsDoc {
   _id: string;
   title: string;
   order: number;
@@ -136,7 +136,7 @@ export interface EpsResult {
   code: number;
   message: string;
   data: {
-    eps;
+    eps: Eps;
   };
 }
 
