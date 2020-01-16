@@ -47,6 +47,11 @@ export class PicaController {
     return this.picaService.ep(id, +order, query);
   }
 
+  @Get("/comics/:id/eps/:order/pages")
+  allEpPages(@Param("id") id: string, @Param("order") order: string) {
+    return this.picaService.allEpPages(id, +order);
+  }
+
   @Get("/image")
   async getImage(@Query("url") url: string, @Res() res: Response) {
     if (url) {
@@ -54,7 +59,8 @@ export class PicaController {
       url = url.replace(/static\/static/, "static");
       let fileName = path.basename(url);
       let tempPath = path.resolve(this.cloudinary.tempDir, fileName);
-      if (fs.existsSync(tempPath)) {
+      if (fs.existsSync(tempPath) && fs.statSync(tempPath).size > 10) {
+        console.info(`cached ${url}`);
         return res.sendFile(tempPath);
       }
 

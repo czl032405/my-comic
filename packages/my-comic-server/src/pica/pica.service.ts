@@ -3,7 +3,7 @@ import * as crypto from "crypto";
 import Axios, { Method, AxiosPromise } from "axios";
 import * as uuidv4 from "uuid/v4";
 import * as qs from "querystring";
-import { ComicsResult, ComicResult, EpResult, EpsResult, Media } from "./pica.interface";
+import { ComicsResult, ComicResult, EpResult, EpsResult, Media, Ep } from "./pica.interface";
 import { Stream, Readable } from "stream";
 
 @Injectable()
@@ -157,6 +157,24 @@ export class PicaService {
     let url = `comics/${id}/order/${order}/pages`;
     let response = await this.request(url, "GET", { params });
     return response.data;
+  }
+
+  async allEpPages(id: string, order: number): Promise<Media[]> {
+    let pages = 20;
+    let page = 1;
+    let medias: Media[] = [];
+    let maxTry = 20;
+    let tryCount = 1;
+    let ep: Ep = null;
+    while (pages >= page && tryCount < maxTry) {
+      let epResult = await this.ep(id, order, { page });
+      ep = epResult.data.ep;
+      pages = epResult.data.pages.pages;
+      page = epResult.data.pages.page + 1;
+      medias = medias.concat(epResult.data.pages.docs.map(doc => doc.media));
+      tryCount++;
+    }
+    return medias;
   }
 
   async search(params: { keyword: string; sort: string; page?: number } = { keyword: "", sort: "ua" }): Promise<ComicsResult> {
