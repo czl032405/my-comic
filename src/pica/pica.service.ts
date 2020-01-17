@@ -3,7 +3,7 @@ import * as crypto from "crypto";
 import Axios, { Method, AxiosPromise } from "axios";
 import * as uuidv4 from "uuid/v4";
 import * as qs from "querystring";
-import { ComicsResult, ComicResult, EpResult, EpsResult, Media, Ep, EpsDoc } from "./pica.interface";
+import { ComicsResult, ComicResult, EpResult, EpsResult, Media, Ep, EpDoc, ComicDoc } from "./pica.interface";
 import * as path from "path";
 import * as os from "os";
 import * as Jimp from "jimp";
@@ -131,17 +131,24 @@ export class PicaService {
    * @param {string} c 分区名字 categories里面的title，如"嗶咔漢化"
    * @param {string} t 标签的名字，由info返回数据里面的"tags"获得
    * @param {string} s 排序
+   * @param {string} k 搜索词
    *  ua: 默认
    *  dd: 新到旧
    *  da: 旧到新
    *  ld: 最多爱心
    *  vd: 最多指名
    */
-  async comics(params: { page?: number; c?: string; s?: string; t?: string } = {}): Promise<ComicsResult> {
-    let { page, c, s, t } = params;
-    let url = "comics";
-    let response = await this.request(url, "GET", { params });
-    return response.data;
+  async comics(params: { page?: number; c?: string; s?: string; t?: string; k?: string } = {}): Promise<ComicsResult> {
+    let { page, c, s, t, k } = params;
+    if (k) {
+      let url = `comics/advanced-search`;
+      let response = await this.request(url, "POST", { params: { page }, data: { keyword: k, sort: s } });
+      return response.data;
+    } else {
+      let url = "comics";
+      let response = await this.request(url, "GET", { params });
+      return response.data;
+    }
   }
 
   async comic(id: string): Promise<ComicResult> {
@@ -162,16 +169,30 @@ export class PicaService {
     return response.data;
   }
 
-  async allEps(id: string): Promise<EpsDoc[]> {
+  async allComics(params: { page?: number; c?: string; s?: string; t?: string; k?: string } = {}, maxPage = 5): Promise<ComicDoc[]> {
     let pages = 20;
     let page = 1;
-    let eps: EpsDoc[] = [];
+    let comics: ComicDoc[] = [];
+    let maxTry = maxPage;
+    let tryCount = 1;
+    while (pages >= page && tryCount < maxTry) {
+      let comicsResult = await this.comics(params);
+      pages = comicsResult.data.comics.pages;
+      page = comicsResult.data.comics.page + 1;
+      comics = comics.concat(comicsResult.data.comics.docs);
+      tryCount++;
+    }
+    return comics;
+  }
+
+  async allEps(id: string): Promise<EpDoc[]> {
+    let pages = 20;
+    let page = 1;
+    let eps: EpDoc[] = [];
     let maxTry = 20;
     let tryCount = 1;
-    // let ep: EpsDoc = null;
     while (pages >= page && tryCount < maxTry) {
       let epResult = await this.eps(id, { page });
-      // ep = epResult.data.eps.docs;
       pages = epResult.data.eps.pages;
       page = epResult.data.eps.page + 1;
       eps = eps.concat(epResult.data.eps.docs);
@@ -186,23 +207,14 @@ export class PicaService {
     let medias: Media[] = [];
     let maxTry = 20;
     let tryCount = 1;
-    let ep: Ep = null;
     while (pages >= page && tryCount < maxTry) {
       let epResult = await this.ep(id, order, { page });
-      ep = epResult.data.ep;
       pages = epResult.data.pages.pages;
       page = epResult.data.pages.page + 1;
       medias = medias.concat(epResult.data.pages.docs.map(doc => doc.media));
       tryCount++;
     }
     return medias;
-  }
-
-  async search(params: { keyword: string; sort: string; page?: number } = { keyword: "", sort: "ua" }): Promise<ComicsResult> {
-    let { keyword, sort = "ua", page = 1 } = params;
-    let url = `comics/advanced-search`;
-    let response = await this.request(url, "POST", { params: { page }, data: { keyword, sort } });
-    return response.data;
   }
 
   async getImage(url: string, reload: boolean = false) {

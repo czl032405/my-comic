@@ -27,9 +27,9 @@ export class PicaController {
     return this.picaService.comics(query);
   }
 
-  @Get("/comics/search")
-  search(@Query() query) {
-    return this.picaService.search(query);
+  @Get("/allcomics")
+  allcomics(@Query() query, @Query("maxPage") maxPage: number) {
+    return this.picaService.allComics(query, maxPage);
   }
 
   @Get("/comics/:id")
@@ -52,7 +52,7 @@ export class PicaController {
     return this.picaService.ep(id, +order, query);
   }
 
-  @Get("/comics/:id/eps/:order/pages")
+  @Get("/comics/:id/eps/:order/allpages")
   allEpPages(@Param("id") id: string, @Param("order") order: string) {
     return this.picaService.allEpPages(id, +order);
   }
