@@ -5,7 +5,7 @@ Page({
     showLoading: false,
     s: "dd",
     t: undefined,
-    c: "禁書目錄",
+    c: undefined,
     k: undefined,
     comics: []
   },
@@ -13,8 +13,10 @@ Page({
   onLoad: function(options) {
     console.info("comics.load");
     let { t, c, k } = options;
+    if (!t && !c && !k) {
+      c = "禁書目錄";
+    }
     this.setData(Object.assign(this.data, JSON.parse(JSON.stringify({ t, c, k }))));
-
     this.loadComics();
   },
 
@@ -34,29 +36,18 @@ Page({
    */
   async loadComics() {
     let { s, t, c, k } = this.data;
-    console.info(
-      JSON.parse(
-        JSON.stringify({
-          t,
-          c,
-          k,
-          s
-        })
-      )
-    );
+    console.info({ s, t, c, k });
     this.setData({ showLoading: true });
     let fResult = await wx.cloud.callFunction({
       name: "pica",
       data: {
         method: "allcomics",
-        params: JSON.parse(
-          JSON.stringify({
-            t,
-            c,
-            k,
-            s
-          })
-        )
+        params: {
+          t,
+          c,
+          k,
+          s
+        }
       }
     });
     let comics = fResult.result;

@@ -76,7 +76,7 @@ export class PicaService {
       if (url.indexOf(this.domain) == -1) {
         url = `${this.domain}/${url}`;
       }
-      let query = qs.stringify(options.params || {});
+      let query = qs.stringify(JSON.parse(JSON.stringify(options.params || {})));
       if (query) {
         url = `${url.replace(/\?.*/, "")}?${query}`;
       }
