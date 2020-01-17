@@ -62,8 +62,11 @@ export class PicaController {
   async getImage(@Query("url") url: string, @Query("reload") reload: string, @Res() res: Response) {
     if (url) {
       res.header("Cache-Control", "max-age=2333333333");
-      let filePath = await this.picaService.getImage(url, !!reload);
-      res.sendFile(filePath);
+      let result = await this.picaService.getImage(url, !!reload);
+      if (result.cached) {
+        res.header("Cached", "1");
+      }
+      res.sendFile(result.filepath);
     } else {
       res.end();
     }
