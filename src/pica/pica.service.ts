@@ -233,7 +233,6 @@ export class PicaService {
       image = await image.scaleToFit(480, 1500);
     }
     image = await image.quality(70);
-    // image = image.greyscale();
     await image.writeAsync(filepath);
     return filepath;
   }
