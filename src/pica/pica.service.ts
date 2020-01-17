@@ -170,13 +170,14 @@ export class PicaService {
   }
 
   async allComics(params: { c?: string; s?: string; t?: string; k?: string } = {}, maxPage = 5): Promise<ComicDoc[]> {
+    let { c, s, t, k } = params;
     let pages = 20;
     let page = 1;
     let comics: ComicDoc[] = [];
     let maxTry = maxPage;
     let tryCount = 0;
     while (pages >= page && tryCount < maxTry) {
-      let comicsResult = await this.comics(params);
+      let comicsResult = await this.comics({ c, s, t, k, page });
       pages = comicsResult.data.comics.pages;
       page = comicsResult.data.comics.page + 1;
       comics = comics.concat(comicsResult.data.comics.docs);
