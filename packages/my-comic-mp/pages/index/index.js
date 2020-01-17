@@ -1,7 +1,9 @@
 const app = getApp();
 
 Page({
-  data: {},
+  data: {
+    showSearch: false
+  },
 
   async onLoad() {
     // this.loadCategories();
@@ -19,5 +21,13 @@ Page({
       let categories = result.result.data.categories;
     }
     console.info(result);
+  },
+
+  search(e) {
+    console.info(e);
+    let k = e.detail.value;
+    wx.navigateTo({
+      url: `/pages/comics/comics?k=${k}`
+    });
   }
 });

@@ -29,7 +29,8 @@ export class PicaController {
 
   @Get("/allcomics")
   allcomics(@Query() query, @Query("maxPage") maxPage: number) {
-    return this.picaService.allComics(query, maxPage);
+    let { t, c, k, s } = query;
+    return this.picaService.allComics({ t, c, k, s }, maxPage);
   }
 
   @Get("/comics/:id")
