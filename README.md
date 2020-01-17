@@ -14,7 +14,7 @@ Nestjs, Pica Api, Cloudinary, Heroku
 
 - [x] my-comic-mp / record reading progress
 - [x] my-comic-mp / switch all-comics & all-eps api
-- [ ] my-comic-mp / search
+- [x] my-comic-mp / search
 
 - [x] my-comic-server / add api to proxy pica image
 - [x] my-comic-server / gzip & zip image
