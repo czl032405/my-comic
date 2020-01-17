@@ -13,13 +13,19 @@ Nestjs, Pica Api, Cloudinary, Heroku
 ## todo
 
 - [x] my-comic-mp / record reading progress
-- [ ] my-comic-mp / pagination on comics and eps
+- [ ] my-comic-mp / switch all-comics & all-eps api
 - [ ] my-comic-mp / search
 
 - [x] my-comic-server / add api to proxy loading pica image
 - [x] my-comic-server / gzip & zip image
+- [ ] my-comic-server / all-comics (max N pages) & all-eps api
+- [ ] my-comic-server / tencent cdn on images
 - [ ] my-comic-server / use github action to only deploy dist files
 - [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
+
+- [ ] my-comic-serverless / comics&eps&pages caching db
+- [ ] my-comic-serverless / comic data sync
+- [ ] my-comic-serverless / switch pica api to caching db first
 
 ## project commands
 

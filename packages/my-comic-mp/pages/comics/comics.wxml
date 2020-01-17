@@ -10,7 +10,7 @@
     </navigator>
   </view>
   <view wx:if='{{comics.length}}' style='display:flex;justify-content:space-between;'>
-    <view>分页</view>
+    <view></view>
     <picker bindchange="onSortPick" value="{{1}}" range="{{['默认排序','新到旧','旧到新','最多爱心','最多指名']}}">
       <button size='mini' style="background:white;color:grey;font-weight:100">
         {{m.getSortName(s)}}

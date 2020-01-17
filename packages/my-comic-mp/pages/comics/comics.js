@@ -3,7 +3,6 @@ const app = getApp();
 Page({
   data: {
     showLoading: false,
-    page: 1,
     s: "dd",
     t: null,
     c: "禁書目錄",
@@ -34,24 +33,22 @@ Page({
    *  vd: 最多指名
    */
   async loadComics() {
-    let { page, s, t, c, k } = this.data;
-    console.info(t, c, k, page, s);
+    let { s, t, c, k } = this.data;
+    console.info(t, c, k, s);
     this.setData({ showLoading: true });
-    let method = k ? "search" : "comics";
     let fResult = await wx.cloud.callFunction({
-      name: "pica",
+      name: "allcomics",
       data: {
         method,
         params: {
           t,
           c,
           k,
-          s,
-          page
+          s
         }
       }
     });
-    let comics = fResult.result.data.comics.docs;
+    let comics = fResult.result;
     this.setData({
       comics,
       showLoading: false

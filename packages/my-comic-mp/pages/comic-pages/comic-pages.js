@@ -34,7 +34,7 @@ Page({
     let fResult = await wx.cloud.callFunction({
       name: "pica",
       data: {
-        method: `comics/${id}/eps/${order}/pages`
+        method: `comics/${id}/eps/${order}/allpages`
       }
     });
     let medias = fResult.result;

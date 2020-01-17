@@ -5,7 +5,7 @@ interface Thumb {
   fileServer: string;
 }
 
-interface Doc {
+export interface ComicDoc {
   _id: string;
   title: string;
   author: string;
@@ -21,7 +21,7 @@ interface Doc {
 }
 
 interface Comics {
-  docs: Doc[];
+  docs: ComicDoc[];
   total: number;
   limit: number;
   page: number;
@@ -75,7 +75,7 @@ interface Comic {
   commentsCount: number;
 }
 
-export interface EpsDoc {
+export interface EpDoc {
   _id: string;
   title: string;
   order: number;
@@ -84,7 +84,7 @@ export interface EpsDoc {
 }
 
 interface Eps {
-  docs: EpsDoc[];
+  docs: EpDoc[];
   total: number;
   limit: number;
   page: number;
