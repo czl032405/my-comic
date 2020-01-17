@@ -174,7 +174,7 @@ export class PicaService {
     let page = 1;
     let comics: ComicDoc[] = [];
     let maxTry = maxPage;
-    let tryCount = 1;
+    let tryCount = 0;
     while (pages >= page && tryCount < maxTry) {
       let comicsResult = await this.comics(params);
       pages = comicsResult.data.comics.pages;
@@ -190,7 +190,7 @@ export class PicaService {
     let page = 1;
     let eps: EpDoc[] = [];
     let maxTry = 20;
-    let tryCount = 1;
+    let tryCount = 0;
     while (pages >= page && tryCount < maxTry) {
       let epResult = await this.eps(id, { page });
       pages = epResult.data.eps.pages;
@@ -206,7 +206,7 @@ export class PicaService {
     let page = 1;
     let medias: Media[] = [];
     let maxTry = 20;
-    let tryCount = 1;
+    let tryCount = 0;
     while (pages >= page && tryCount < maxTry) {
       let epResult = await this.ep(id, order, { page });
       pages = epResult.data.pages.pages;
