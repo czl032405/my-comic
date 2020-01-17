@@ -169,7 +169,7 @@ export class PicaService {
     return response.data;
   }
 
-  async allComics(params: { page?: number; c?: string; s?: string; t?: string; k?: string } = {}, maxPage = 5): Promise<ComicDoc[]> {
+  async allComics(params: { c?: string; s?: string; t?: string; k?: string } = {}, maxPage = 5): Promise<ComicDoc[]> {
     let pages = 20;
     let page = 1;
     let comics: ComicDoc[] = [];
