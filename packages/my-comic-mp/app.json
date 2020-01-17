@@ -3,9 +3,8 @@
   "usingComponents": {
     "mp-cell": "./miniprogram_npm/weui-miniprogram/cell/cell",
     "mp-cells": "./miniprogram_npm/weui-miniprogram/cells/cells",
-    "mp-slideview": "./miniprogram_npm/weui-miniprogram/slideview/slideview",
     "mp-loading": "./miniprogram_npm/weui-miniprogram/loading/loading",
-    "mp-gallery": ".//miniprogram_npm/weui-miniprogram/gallery/gallery"
+    "mp-searchbar": "./miniprogram_npm/weui-miniprogram/searchbar/searchbar"
   },
   "window": {
     "backgroundColor": "#F6F6F6",
