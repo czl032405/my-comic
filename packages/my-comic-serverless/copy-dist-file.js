@@ -10,7 +10,7 @@ const copyFile = function(source, dist) {
 
 const run = async function() {
   del.sync("dist");
-  !fs.existsSync("dist") && fs.mkdirSync("dist");
+  fs.mkdirSync("dist");
 
   await copydir("src", "dist", {
     cover: true,

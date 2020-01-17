@@ -19,7 +19,6 @@ Nestjs, Pica Api, Cloudinary, Heroku
 - [x] my-comic-server / add api to proxy pica image
 - [x] my-comic-server / gzip & zip image
 - [x] my-comic-server / all-comics (max N pages) & all-eps api
-- [ ] my-comic-server / tencent cdn on images
 - [ ] my-comic-server / use github action to only deploy dist files
 - [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
 

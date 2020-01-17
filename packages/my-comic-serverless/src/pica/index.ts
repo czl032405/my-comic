@@ -5,7 +5,7 @@ export async function main(event, context) {
   let url = `${BASE_URL}${method}`;
 
   if (method == "allcomics") {
-    params.maxPage = 1;
+    params.maxPage = 3;
   }
 
   let result = await Axios({

@@ -17,6 +17,13 @@ Page({
         id: options.id
       });
     }
+    if (options.epsCount) {
+      this.setData({
+        eps: Array.from({ length: options.epsCount })
+          .map((value, index) => ({ title: index + 1, order: index + 1 }))
+          .sort((a, b) => b.order - a.order)
+      });
+    }
 
     this.loadEps();
   },

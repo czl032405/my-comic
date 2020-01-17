@@ -37,6 +37,15 @@ Page({
   async loadComics() {
     let { s, t, c, k } = this.data;
     console.info({ s, t, c, k });
+    let { data, date } = wx.getStorageSync(`pica_${s}_${t}_${c}_${k}`) || {};
+    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 6) {
+      console.info("comics cached");
+      this.setData({
+        comics: data,
+        showLoading: false
+      });
+      return;
+    }
     this.setData({ showLoading: true });
     let fResult = await wx.cloud.callFunction({
       name: "pica",
@@ -55,6 +64,8 @@ Page({
       comics,
       showLoading: false
     });
+
+    wx.setStorageSync(`pica_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
 
     console.info(fResult);
   },
