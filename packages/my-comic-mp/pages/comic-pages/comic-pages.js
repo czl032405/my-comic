@@ -4,6 +4,7 @@ Page({
   data: {
     showLoading: false,
     id: "5da89cb3a7ed463faded35fe",
+    api: "pica",
     order: "1",
     pages: [],
     index: 0,
@@ -14,38 +15,60 @@ Page({
 
   onLoad(options) {
     console.info("comic-pages.load");
-    let { id, order, index } = options;
-    this.setData(Object.assign(this.data, JSON.parse(JSON.stringify({ id, order: +order, index: +index }))));
+    let { id, order, index, api } = options;
+    this.setData(Object.assign(this.data, options));
     this.loadPages();
   },
 
   setPicaProgress() {
     let pica_progress = wx.getStorageSync("pica") || {};
     pica_progress[this.data.id] = {
-      order: +this.data.order,
-      index: +this.data.index
+      order: this.data.order,
+      index: this.data.index
     };
     wx.setStorageSync("pica", pica_progress);
   },
 
   async loadPages() {
-    this.setData({ showLoading: true });
-    let { id, order } = this.data;
-    let fResult = await wx.cloud.callFunction({
-      name: "pica",
-      data: {
-        method: `comics/${id}/eps/${order}/allpages`
-      }
-    });
-    let medias = fResult.result;
-    let pages = medias.map(media => "https://my-comic.herokuapp.com/pica/image?url=" + media.fileServer + "/static/" + media.path);
+    if (this.data.api == "pica") {
+      this.setData({ showLoading: true });
+      let { id, order } = this.data;
+      let fResult = await wx.cloud.callFunction({
+        name: "pica",
+        data: {
+          method: `comics/${id}/eps/${order}/allpages`
+        }
+      });
+      let medias = fResult.result;
+      // let pages = medias.map(media => "https://my-comic.herokuapp.com/pica/image?url=" + media.fileServer + "/static/" + media.path);
+      let pages = medias.map(media => "https://pica.mxtype.com/pica/image?url=" + media.fileServer + "/static/" + media.path);
 
-    this.setData({
-      showLoading: false,
-      workingIndex: 0,
-      pages
-    });
+      this.setData({
+        showLoading: false,
+        workingIndex: 0,
+        pages
+      });
+    }
+    if (this.data.api == "pingcc") {
+      this.setData({ showLoading: true });
+      let { id, order } = this.data;
+      let fResult = await wx.cloud.callFunction({
+        name: "pingcc",
+        data: {
+          params: {
+            mhurl2: order
+          }
+        }
+      });
 
+      let pages = fResult.result.list.map(i => i.img);
+
+      this.setData({
+        showLoading: false,
+        workingIndex: 0,
+        pages
+      });
+    }
     this.onSwiperChange({ detail: { current: 0 } });
   },
 

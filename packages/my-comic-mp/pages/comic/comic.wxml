@@ -1,14 +1,10 @@
 <view>
   <view style="display:flex; flex-wrap:wrap;margin-bottom:20rpx">
-    <navigator url="{{'/pages/comic-pages/comic-pages?id='+id+'&order='+ ep.order +'&index='+(currentOrder== ep.order?currentIndex:0)}}" wx:key='index' wx:for='{{eps}}' wx:for-item='ep'>
+    <navigator url="{{'/pages/comic-pages/comic-pages?id='+id+'&order='+ ep.order +'&index='+(currentOrder== ep.order?currentIndex:0)+'&api='+api}}" wx:key='index' wx:for='{{eps}}' wx:for-item='ep'>
       <button size='mini' style="background:{{currentOrder==ep.order?'rgba(0,0,0,0.3)':'rgba(0,0,0,0.01)'}};color:{{currentOrder==ep.order?'purple':'grey'}};font-weight:{{currentOrder== ep.order?'700':'100'}};font-size:30rpx;margin:10rpx">
         {{ep.title}}
       </button>
     </navigator>
-  </view>
-  <view wx:if='{{comics.length}}' style='display:flex;justify-content:space-between;'>
-    <view>分页</view>
-    <view></view>
   </view>
   <mp-loading show='{{showLoading}}'></mp-loading>
 </view>

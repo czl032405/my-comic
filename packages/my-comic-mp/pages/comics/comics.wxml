@@ -1,6 +1,6 @@
 <view>
   <view style="display:flex; flex-wrap:wrap;margin-bottom:20rpx">
-    <navigator url="{{'/pages/comic/comic?id='+comic._id+'&epsCount='+comic.epsCount}}" wx:key='index' wx:for='{{comics}}' wx:for-item='comic'>
+    <navigator url="{{'/pages/comic/comic?id='+comic._id+'&epsCount='+comic.epsCount+'&api='+api}}" wx:key='index' wx:for='{{comics}}' wx:for-item='comic'>
       <view style='width:250rpx;height:auto;position:relative;margin-bottom:10rpx'>
         <image mode='aspectFill' wx:if='{{comic.thumb}}' style='width:250rpx;height:250rpx' src="{{m.getMediaUrl(comic.thumb)}}"></image>
         <view style='width:100%;height:70rpx;bottom:0;color:grey;font-weight:100;font-size:12px;overflow: hidden;text-overflow: ellipsis;-webkit-box-orient: vertical;-webkit-line-clamp: 2; display: -webkit-box;'>
@@ -9,7 +9,7 @@
       </view>
     </navigator>
   </view>
-  <view wx:if='{{comics.length}}' style='display:flex;justify-content:space-between;'>
+  <view wx:if="{{comics.length && api=='pica'}}" style='display:flex;justify-content:space-between;'>
     <view></view>
     <picker bindchange="onSortPick" value="{{1}}" range="{{['默认排序','新到旧','旧到新','最多爱心','最多指名']}}">
       <button size='mini' style="background:white;color:grey;font-weight:100">

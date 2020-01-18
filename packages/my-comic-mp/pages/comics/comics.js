@@ -3,20 +3,20 @@ const app = getApp();
 Page({
   data: {
     showLoading: false,
+    api: "pica",
     s: "dd",
     t: undefined,
-    c: undefined,
+    c: "禁書目錄",
     k: undefined,
     comics: []
   },
 
   onLoad: function(options) {
     console.info("comics.load");
-    let { t, c, k } = options;
-    if (!t && !c && !k) {
-      c = "禁書目錄";
-    }
-    this.setData(Object.assign(this.data, JSON.parse(JSON.stringify({ t, c, k }))));
+    let { t, c, k, api } = options;
+
+    this.setData(Object.assign(this.data, { api, t, c, k }));
+
     this.loadComics();
   },
 
@@ -35,39 +35,59 @@ Page({
    *  vd: 最多指名
    */
   async loadComics() {
-    let { s, t, c, k } = this.data;
-    console.info({ s, t, c, k });
-    let { data, date } = wx.getStorageSync(`pica_${s}_${t}_${c}_${k}`) || {};
-    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 6) {
-      console.info("comics cached");
+    let { api, s, t, c, k } = this.data;
+    if (api == "pica") {
+      console.info({ s, t, c, k });
+      let { data, date } = wx.getStorageSync(`pica_${s}_${t}_${c}_${k}`) || {};
+      if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 6) {
+        console.info("comics cached");
+        this.setData({
+          comics: data,
+          showLoading: false
+        });
+        return;
+      }
+      this.setData({ showLoading: true });
+      let fResult = await wx.cloud.callFunction({
+        name: "pica",
+        data: {
+          method: "allcomics",
+          params: {
+            t,
+            c,
+            k,
+            s
+          }
+        }
+      });
+      let comics = fResult.result;
       this.setData({
-        comics: data,
+        comics,
         showLoading: false
       });
-      return;
+
+      wx.setStorageSync(`pica_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
+      console.info(fResult);
     }
-    this.setData({ showLoading: true });
-    let fResult = await wx.cloud.callFunction({
-      name: "pica",
-      data: {
-        method: "allcomics",
-        params: {
-          t,
-          c,
-          k,
-          s
+
+    if (api == "pingcc") {
+      console.info({ k });
+      let fResult = await wx.cloud.callFunction({
+        name: "pingcc",
+        data: {
+          params: {
+            name: k
+          }
         }
+      });
+      if (fResult.result.mhlist) {
+        let comics = fResult.result.mhlist.map(l => ({ _id: l.url, epsCount: 0, thumb: l.cover, title: l.name }));
+        this.setData({
+          comics,
+          showLoading: false
+        });
       }
-    });
-    let comics = fResult.result;
-    this.setData({
-      comics,
-      showLoading: false
-    });
-
-    wx.setStorageSync(`pica_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
-
-    console.info(fResult);
+    }
   },
 
   onSortPick(e) {
@@ -75,7 +95,6 @@ Page({
     this.setData({
       s
     });
-
     this.loadComics();
   }
 });

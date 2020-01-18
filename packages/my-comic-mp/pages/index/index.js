@@ -6,11 +6,11 @@ Page({
   },
 
   async onLoad() {
-    // this.loadCategories();
+    // this.loadPicaCategories();
   },
 
-  async loadCategories() {
-    console.info("loadCategories");
+  async loadPicaCategories() {
+    console.info("loadPicaCategories");
     let result = await wx.cloud.callFunction({
       name: "pica",
       data: {
@@ -23,11 +23,19 @@ Page({
     console.info(result);
   },
 
+  searchPica(e) {
+    console.info(e);
+    let k = e.detail.value;
+    wx.navigateTo({
+      url: `/pages/comics/comics?k=${k}&api=pica`
+    });
+  },
+
   search(e) {
     console.info(e);
     let k = e.detail.value;
     wx.navigateTo({
-      url: `/pages/comics/comics?k=${k}`
+      url: `/pages/comics/comics?k=${k}&api=pingcc`
     });
   }
 });

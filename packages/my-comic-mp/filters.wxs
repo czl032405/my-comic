@@ -10,10 +10,8 @@ module.exports.getSortName = function(s) {
 
 module.exports.getMediaUrl = function(media) {
   //console.info("https://my-comic.herokuapp.com/pica/image?url="+media.fileServer+"/static/"+media.path);
-  return (
-    "https://my-comic.herokuapp.com/pica/image?url=" +
-    media.fileServer +
-    "/static/" +
-    media.path
-  );
+  if (typeof media == "string") {
+    return media;
+  }
+  return "https://my-comic.herokuapp.com/pica/image?url=" + media.fileServer + "/static/" + media.path;
 };
