@@ -41,7 +41,7 @@ Page({
       });
       let medias = fResult.result;
       // let pages = medias.map(media => "https://my-comic.herokuapp.com/pica/image?url=" + media.fileServer + "/static/" + media.path);
-      let pages = medias.map(media => "https://pica.mxtype.com/pica/image?url=" + media.fileServer + "/static/" + media.path);
+      let pages = medias;
 
       this.setData({
         showLoading: false,

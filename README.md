@@ -22,9 +22,7 @@ Nestjs, Pica Api, Cloudinary, Heroku
 - [ ] my-comic-server / use github action to only deploy dist files
 - [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
 
-- [ ] my-comic-serverless / comics&eps&pages caching db
-- [ ] my-comic-serverless / comic data sync
-- [ ] my-comic-serverless / switch pica api to caching db first
+- [ ] mangabz
 
 ## project commands
 
