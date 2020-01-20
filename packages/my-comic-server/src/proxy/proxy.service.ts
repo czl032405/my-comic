@@ -13,8 +13,7 @@ export class ProxyService {
       return res.data;
     } catch (error) {
       let data = error.response && error.response.data;
-      error.data = data;
-      throw error;
+      throw data;
     }
   }
   async getImage(url: string, reload: boolean = false) {
