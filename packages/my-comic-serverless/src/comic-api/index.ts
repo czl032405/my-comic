@@ -2,6 +2,12 @@ import Axios from "axios";
 import { BaseComicApi } from "./apis/api.base";
 import { PicaComicApi } from "./apis/pica";
 import { PingccComicApi } from "./apis/pingcc";
+import * as cloud from "wx-server-sdk";
+
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+});
+
 export async function main(event, context) {
   try {
     const { api = "", method = "", params = {} } = event;

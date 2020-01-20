@@ -4,7 +4,7 @@ import * as crypto from "crypto";
 import * as uuidv4 from "uuid/v4";
 import Axios, { Method, AxiosRequestConfig } from "axios";
 import * as qs from "querystring";
-
+import * as cloud from "wx-server-sdk";
 export class PicaComicApi extends BaseComicApi {
   private domain = "https://picaapi.picacomic.com";
   private secretKey = "~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn";
@@ -50,6 +50,22 @@ export class PicaComicApi extends BaseComicApi {
   }
 
   async request(options: AxiosRequestConfig) {
+    if (!this.token && !/auth\/login/.test(options.url)) {
+      // load token from wx cloud db
+      try {
+        const db = cloud.database();
+        const picaAuth = db.collection("my-comic-pica-auth");
+
+        let res = await picaAuth.doc("config").get();
+        let token = res.data.token;
+        if (token) {
+          this.token = token;
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     let loginTry = false;
     let query = qs.stringify(JSON.parse(JSON.stringify(options.params || {})));
     delete options.params;
@@ -87,6 +103,18 @@ export class PicaComicApi extends BaseComicApi {
     let result = response.data;
     if (result.data && result.data.token) {
       this.token = result.data.token;
+      // set token to wxcloud db
+      try {
+        const db = cloud.database();
+        const picaAuth = db.collection("my-comic-pica-auth");
+        await picaAuth.doc("config").set({
+          data: {
+            token: this.token
+          }
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
     return response.data;
   }
@@ -157,7 +185,7 @@ export class PicaComicApi extends BaseComicApi {
     return eps;
   }
   async pages(comicId: string, epId: string): Promise<PageDoc[]> {
-    let result: PageDoc[] = [];
+    let pagesResult: PageDoc[] = [];
     let pages = 1;
     let page = 1;
     let maxTry = 20;
@@ -169,7 +197,7 @@ export class PicaComicApi extends BaseComicApi {
       let result = response.data;
       pages = result.data.pages.pages;
       page = result.data.pages.page + 1;
-      result = result.concat(
+      pagesResult = pagesResult.concat(
         result.data.pages.docs.map(doc => {
           return {
             _id: doc._id,
@@ -181,6 +209,6 @@ export class PicaComicApi extends BaseComicApi {
       );
       tryCount++;
     }
-    return result;
+    return pagesResult;
   }
 }
