@@ -31,11 +31,19 @@ Page({
     });
   },
 
-  search(e) {
+  searchPingcc(e) {
     console.info(e);
     let k = e.detail.value;
     wx.navigateTo({
       url: `/pages/comics/comics?k=${k}&api=pingcc`
+    });
+  },
+
+  searchMangabz() {
+    console.info(e);
+    let k = e.detail.value;
+    wx.navigateTo({
+      url: `/pages/comics/comics?k=${k}&api=mangabz`
     });
   }
 });

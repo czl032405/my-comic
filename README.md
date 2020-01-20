@@ -1,6 +1,6 @@
 ## my-comic-server
 
-Nestjs, Pica Api, Cloudinary, Heroku
+Heroku App, NestJS, 代理接口、代理下载图片
 
 ## my-comic-mp
 
@@ -8,21 +8,12 @@ Nestjs, Pica Api, Cloudinary, Heroku
 
 ## my-comic-serverless
 
-微信云开发
+微信云开发, Comic Api
 
 ## todo
 
-- [x] my-comic-mp / record reading progress
-- [x] my-comic-mp / switch all-comics & all-eps api
-- [x] my-comic-mp / search
-
-- [x] my-comic-server / add api to proxy pica image
-- [x] my-comic-server / gzip & zip image
-- [x] my-comic-server / all-comics (max N pages) & all-eps api
-- [ ] my-comic-server / use github action to only deploy dist files
-- [ ] my-comic-server / use process.argv to trigger cron job on cron.ts
-
 - [ ] mangabz
+- [ ] auto testing
 
 ## project commands
 

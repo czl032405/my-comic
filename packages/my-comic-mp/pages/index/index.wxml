@@ -1,8 +1,15 @@
 <view>
   <view>
+    <mp-cells title='mangabz'>
+      <mp-cell>
+        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="searchMangabz"></input>
+      </mp-cell>
+    </mp-cells>
+  </view>
+  <view>
     <mp-cells title='聚合pingcc'>
       <mp-cell>
-        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="search"></input>
+        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="searchPingcc"></input>
       </mp-cell>
     </mp-cells>
   </view>

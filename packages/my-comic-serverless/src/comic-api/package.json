@@ -1,5 +1,5 @@
 {
-  "name": "pica",
+  "name": "comic-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "wx-server-sdk": "latest",
-    "axios": "^0.19.1"
+    "axios": "^0.19.1",
+    "uuid": "^3.3.3"
   }
 }
