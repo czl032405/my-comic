@@ -32,14 +32,14 @@ export abstract class BaseComicApi {
   abstract pages(comicId: string, epId: string): Promise<PageDoc[]>;
 
   async request(options: AxiosRequestConfig, proxy = false) {
-    console.info(`Request ${options.url}`);
+    console.info(`Request ${options.url} Proxy ${proxy}`);
     // if (options.params) {
     //   options.params = JSON.parse(JSON.stringify(options.params));
     // }
     if (proxy) {
       let res = await Axios({
         method: "POST",
-        url: "https://my-comic.heroku.app/proxy",
+        url: "https://my-comic.herokuapp.com/proxy",
         data: options
       });
       return res;
@@ -49,7 +49,7 @@ export abstract class BaseComicApi {
     }
   }
 
-  async getProxyImageUrl(url: string) {
-    return `https://my-comic.heroku.app/proxy/image?url=${url}`;
+  getProxyImageUrl(url: string) {
+    return `https://my-comic.herokuapp.com/proxy/image?url=${url}`;
   }
 }

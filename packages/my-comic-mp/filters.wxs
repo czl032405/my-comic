@@ -10,16 +10,16 @@ module.exports.getSortName = function(s) {
 
 module.exports.getMediaUrl = function(media) {
   //console.info("https://my-comic.herokuapp.com/pica/image?url="+media.fileServer+"/static/"+media.path);
-  var url = "";
-  if (typeof media == "string") {
-    url = media;
-  }
-  if (typeof media == "object") {
-    url = media.fileServer + "/static/" + media.path;
-  }
+  // var url = "";
+  // if (typeof media == "string") {
+  //   url = media;
+  // }
+  // if (typeof media == "object") {
+  //   url = media.fileServer + "/static/" + media.path;
+  // }
 
-  if (url.indexOf("pica") > -1 || url.indexOf("detatu") > -1) {
-    url = "https://my-comic.herokuapp.com/pica/image?url=" + url;
-  }
-  return url;
+  // if (url.indexOf("pica") > -1 || url.indexOf("detatu") > -1) {
+  //   url = "https://my-comic.herokuapp.com/pica/image?url=" + url;
+  // }
+  return media;
 };

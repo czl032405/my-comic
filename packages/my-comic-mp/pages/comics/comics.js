@@ -6,7 +6,7 @@ Page({
     api: "pica",
     s: "dd",
     t: undefined,
-    c: "禁書目錄",
+    c: undefined,
     k: undefined,
     comics: []
   },
@@ -36,58 +36,42 @@ Page({
    */
   async loadComics() {
     let { api, s, t, c, k } = this.data;
-    if (api == "pica") {
-      console.info({ s, t, c, k });
-      let { data, date } = wx.getStorageSync(`pica_${s}_${t}_${c}_${k}`) || {};
-      if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 6) {
-        console.info("comics cached");
-        this.setData({
-          comics: data,
-          showLoading: false
-        });
-        return;
-      }
-      this.setData({ showLoading: true });
-      let fResult = await wx.cloud.callFunction({
-        name: "pica",
-        data: {
-          method: "allcomics",
-          params: {
-            t,
-            c,
-            k,
-            s
-          }
-        }
-      });
-      let comics = fResult.result;
+
+    console.info({ api, s, t, c, k });
+    // cached
+    let { data, date } = wx.getStorageSync(`${api}_${s}_${t}_${c}_${k}`) || {};
+    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 6) {
+      console.info("comics cached");
       this.setData({
-        comics,
+        comics: data,
         showLoading: false
       });
-
-      wx.setStorageSync(`pica_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
-      console.info(fResult);
+      return;
     }
 
-    if (api == "pingcc") {
-      console.info({ k });
-      let fResult = await wx.cloud.callFunction({
-        name: "pingcc",
-        data: {
-          params: {
-            name: k
-          }
+    // not cached
+    this.setData({ showLoading: true });
+    let fResult = await wx.cloud.callFunction({
+      name: "comic-api",
+      data: {
+        api,
+        method: "comics",
+        params: {
+          t,
+          c,
+          k,
+          s
         }
-      });
-      if (fResult.result.mhlist) {
-        let comics = fResult.result.mhlist.map(l => ({ _id: l.url, epsCount: 0, thumb: l.cover, title: l.name }));
-        this.setData({
-          comics,
-          showLoading: false
-        });
       }
-    }
+    });
+    let comics = fResult.result;
+    this.setData({
+      comics,
+      showLoading: false
+    });
+
+    wx.setStorageSync(`${api}_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
+    console.info(fResult);
   },
 
   onSortPick(e) {

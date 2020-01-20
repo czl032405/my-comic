@@ -79,6 +79,7 @@ export class PicaComicApi extends BaseComicApi {
   }
 
   async login(data: { email?: string; password?: string } = {}) {
+    console.info(`login `, process.env.PICA_EMAIL);
     let { email = process.env.PICA_EMAIL, password = process.env.PICA_PASSWORD } = data;
     this.token = "";
     let url = `auth/sign-in`;
@@ -95,7 +96,8 @@ export class PicaComicApi extends BaseComicApi {
     if (k) {
       let url = `comics/advanced-search`;
       let response = await this.request({ url, method: "POST", params: { page: 1 }, data: { keyword: k, sort: s } });
-      return response.data.comics.docs.map(doc => {
+      let result = response.data;
+      return result.data.comics.docs.map(doc => {
         return {
           _id: doc._id,
           api: "pica",
@@ -109,7 +111,8 @@ export class PicaComicApi extends BaseComicApi {
     } else {
       let url = "comics";
       let response = await this.request({ url, method: "GET", params });
-      return response.data.comics.docs.map(doc => {
+      let result = response.data;
+      return result.data.comics.docs.map(doc => {
         return {
           _id: doc._id,
           api: "pica",
@@ -131,15 +134,16 @@ export class PicaComicApi extends BaseComicApi {
     let maxTry = 20;
     let tryCount = 0;
     while (pages >= page && tryCount < maxTry) {
-      let epResult = await this.request({
+      let response = await this.request({
         url,
         method: "GET",
         params: { page }
       });
-      pages = epResult.data.eps.pages;
-      page = epResult.data.eps.page + 1;
+      let result = response.data;
+      pages = result.data.eps.pages;
+      page = result.data.eps.page + 1;
       eps = eps.concat(
-        epResult.data.eps.docs.map(doc => {
+        result.data.eps.docs.map(doc => {
           return {
             _id: doc._id,
             comicId,
@@ -161,11 +165,12 @@ export class PicaComicApi extends BaseComicApi {
     let order = epId;
     while (pages >= page && tryCount < maxTry) {
       let url = `comics/${comicId}/order/${order}/pages`;
-      let epResult = await this.request({ url, method: "GET", params: { page } });
-      pages = epResult.data.pages.pages;
-      page = epResult.data.pages.page + 1;
+      let response = await this.request({ url, method: "GET", params: { page } });
+      let result = response.data;
+      pages = result.data.pages.pages;
+      page = result.data.pages.page + 1;
       result = result.concat(
-        epResult.data.pages.docs.map(doc => {
+        result.data.pages.docs.map(doc => {
           return {
             _id: doc._id,
             comicId,

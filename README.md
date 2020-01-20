@@ -8,7 +8,7 @@ Heroku App, NestJS, 代理接口、代理下载图片
 
 ## my-comic-serverless
 
-微信云开发, Comic Api
+微信云开发, Comic Apis [pica][pingcc]
 
 ## todo
 

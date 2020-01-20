@@ -3,8 +3,8 @@ export interface ComicDoc {
   api: string;
   title: string;
   author: string;
-  finished: boolean;
   thumb: string;
+  finished: boolean;
   updated_at: Date;
 }
 
