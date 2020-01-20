@@ -35,6 +35,7 @@ export class CustomExceptionFilter extends BaseExceptionFilter {
       return response.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
         statusCode: (<any>exception).statusCode || HttpStatus.INTERNAL_SERVER_ERROR,
         message: isPro ? "Internal server error" : (<Error>exception).message || exception,
+        data: isPro ? "" : (<any>exception).data,
         stack: isPro ? undefined : (<Error>exception).stack
       });
     }
