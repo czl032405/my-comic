@@ -3,9 +3,9 @@
     <swiper current="{{workingIndex}}" circular="{{true}}" bindchange='onSwiperChange' style='width:100vw;height:100vh;background:rgba(0,0,0,0.8)'>
       <swiper-item wx:for="{{workingPages}}" wx:for-item="page" wx:key='index'>
         <view style='width:100%;height:100%;position:relative'>
-          <image src="{{m.getMediaUrl(page)}}" mode="aspectFit" style='width:100%;height:100%'></image>
+          <image src="{{page}}" mode="aspectFit" style='width:100%;height:100%'></image>
           <view style='font-size:20rpx;width:90%;word-break: break-all;color:grey;position:absolute;bottom:0;'>
-            {{m.getMediaUrl(page)}} {{page}}
+            {{page}}
           </view>
         </view>
       </swiper-item>

@@ -127,7 +127,7 @@ export class PicaComicApi extends BaseComicApi {
       let result = response.data;
       return result.data.comics.docs.map(doc => {
         return {
-          _id: doc._id,
+          comicId: doc._id,
           api: "pica",
           title: doc.title,
           author: doc.author,
@@ -142,7 +142,7 @@ export class PicaComicApi extends BaseComicApi {
       let result = response.data;
       return result.data.comics.docs.map(doc => {
         return {
-          _id: doc._id,
+          comicId: doc._id,
           api: "pica",
           title: doc.title,
           author: doc.author,
@@ -173,7 +173,7 @@ export class PicaComicApi extends BaseComicApi {
       eps = eps.concat(
         result.data.eps.docs.map(doc => {
           return {
-            _id: doc._id,
+            epId: doc.order,
             comicId,
             title: doc.title,
             updated_at: doc.updated_at
@@ -200,7 +200,7 @@ export class PicaComicApi extends BaseComicApi {
       pagesResult = pagesResult.concat(
         result.data.pages.docs.map(doc => {
           return {
-            _id: doc._id,
+            pageId: doc._id,
             comicId,
             epId,
             url: this.getProxyImageUrl(`${doc.media.fileServer}/static/${doc.media.path}`)

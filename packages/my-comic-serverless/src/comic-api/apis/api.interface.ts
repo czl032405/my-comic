@@ -1,5 +1,5 @@
 export interface ComicDoc {
-  _id: string;
+  comicId: string;
   api: string;
   title: string;
   author: string;
@@ -9,14 +9,14 @@ export interface ComicDoc {
 }
 
 export interface EpDoc {
-  _id: string;
   comicId: string;
+  epId: string;
   title: string;
   updated_at: Date;
 }
 
 export interface PageDoc {
-  _id: string;
+  pageId: string;
   comicId: string;
   epId: string;
   url: string;

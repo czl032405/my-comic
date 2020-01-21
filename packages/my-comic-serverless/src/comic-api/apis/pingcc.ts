@@ -15,8 +15,8 @@ export class PingccComicApi extends BaseComicApi {
       });
       let comics = res.data.mhlist.map(l => {
         return {
-          _id: l.url,
           api: "pingcc",
+          comicId: l.url,
           title: l.name,
           author: l.author,
           thumb: l.cover,
@@ -38,8 +38,8 @@ export class PingccComicApi extends BaseComicApi {
     let eps = res.data.list
       .map(i => {
         return {
-          _id: i.url,
           comicId,
+          epId: i.url,
           title: i.num,
           updated_at: undefined
         };
@@ -57,7 +57,7 @@ export class PingccComicApi extends BaseComicApi {
     });
     let pages = res.data.list.map(i => {
       return {
-        _id: i.img,
+        pageId: i.img,
         comicId,
         epId,
         url: i.img

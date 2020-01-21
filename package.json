@@ -7,6 +7,8 @@
   "scripts": {
     "dev:server": "lerna run --scope *server  dev --parallel",
     "dev:serverless": "lerna run --scope *serverless  dev --parallel",
+    "build:server": "lerna run --scope *server  dev --parallel",
+    "build:serverless": "lerna run --scope *serverless  dev --parallel",
     "build": "lerna run build --parallel"
   }
 }

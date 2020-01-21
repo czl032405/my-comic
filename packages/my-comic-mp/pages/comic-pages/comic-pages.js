@@ -14,8 +14,7 @@ Page({
   },
 
   onLoad(options) {
-    console.info("comic-pages.load");
-    let { id, ep, index, api } = options;
+    console.info("comic-pages.load", options);
     this.setData(Object.assign(this.data, options));
     this.loadPages();
   },
