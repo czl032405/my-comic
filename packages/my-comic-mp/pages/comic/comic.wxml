@@ -1,6 +1,6 @@
 <view>
   <view style="display:flex; flex-wrap:wrap;margin-bottom:20rpx">
-    <navigator url="{{'/pages/comic-pages/comic-pages?id='+id+'&ep='+ ep.epId +'&index='+(currentEp== ep.epId?currentIndex:0)+'&api='+api}}" wx:key='index' wx:for='{{eps}}' wx:for-item='ep'>
+    <navigator url="{{'/pages/comic-pages/comic-pages?id='+id+'&ep='+ ep.epId + '&epTitle='+ep.title+'&index='+(currentEp== ep.epId?currentIndex:0)+'&api='+api}}" wx:key='index' wx:for='{{eps}}' wx:for-item='ep'>
       <button size='mini' style="background:{{currentEp==ep.epId?'rgba(0,0,0,0.3)':'rgba(0,0,0,0.01)'}};color:{{currentEp==ep.epId?'purple':'grey'}};font-weight:{{currentEp== ep.epId?'700':'100'}};font-size:30rpx;margin:10rpx">
         {{ep.title}}
       </button>

@@ -15,8 +15,13 @@ App({
     }
 
     this.globalData = {};
-    let pica_progress = wx.getStorageSync("pica") || {};
-    wx.setStorageSync("pica", pica_progress);
+
+    let storage = wx.getStorageSync("clear_token") || {};
+    let { date } = storage;
+    if (!date || +new Date() - +new Date(date) > 1000 * 60 * 60 * 24 * 5) {
+      wx.clearStorageSync();
+      wx.setStorageSync("clear_token", { date: new Date() });
+    }
   },
 
   onError(e) {

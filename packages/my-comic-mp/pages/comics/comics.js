@@ -12,11 +12,9 @@ Page({
   },
 
   onLoad: function(options) {
-    console.info("comics.load");
+    console.info("comics.load", options);
     let { t, c, k, api } = options;
-
     this.setData(Object.assign(this.data, { api, t, c, k }));
-
     this.loadComics();
   },
 
@@ -37,10 +35,9 @@ Page({
   async loadComics() {
     let { api, s, t, c, k } = this.data;
 
-    console.info({ api, s, t, c, k });
     // cached
     let { data, date } = wx.getStorageSync(`${api}_${s}_${t}_${c}_${k}`) || {};
-    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 6) {
+    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 24) {
       console.info("comics cached");
       this.setData({
         comics: data,
@@ -50,28 +47,36 @@ Page({
     }
 
     // not cached
-    this.setData({ showLoading: true });
-    let fResult = await wx.cloud.callFunction({
-      name: "comic-api",
-      data: {
-        api,
-        method: "comics",
-        params: {
-          t,
-          c,
-          k,
-          s
+    try {
+      this.setData({ showLoading: true });
+      let fResult = await wx.cloud.callFunction({
+        name: "comic-api",
+        data: {
+          api,
+          method: "comics",
+          params: {
+            t,
+            c,
+            k,
+            s
+          }
         }
-      }
-    });
-    let comics = fResult.result;
-    this.setData({
-      comics,
-      showLoading: false
-    });
+      });
+      let comics = fResult.result;
+      this.setData({
+        comics,
+        showLoading: false
+      });
 
-    wx.setStorageSync(`${api}_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
-    console.info(fResult);
+      wx.setStorageSync(`${api}_${s}_${t}_${c}_${k}`, { data: comics, date: new Date() });
+    } catch (error) {
+      wx.showToast({
+        title: error.message || error.errMsg || error
+      });
+      this.setData({
+        showLoading: false
+      });
+    }
   },
 
   onSortPick(e) {

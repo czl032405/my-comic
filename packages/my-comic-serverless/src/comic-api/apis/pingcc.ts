@@ -13,17 +13,19 @@ export class PingccComicApi extends BaseComicApi {
           name: k
         }
       });
-      let comics = res.data.mhlist.map(l => {
-        return {
-          api: "pingcc",
-          comicId: l.url,
-          title: l.name,
-          author: l.author,
-          thumb: l.cover,
-          finished: undefined,
-          updated_at: undefined
-        };
-      });
+      let comics = res.data.mhlist
+        .map(l => {
+          return {
+            api: "pingcc",
+            comicId: l.url,
+            title: l.name,
+            author: l.author,
+            thumb: l.cover,
+            finished: undefined,
+            updated_at: undefined
+          };
+        })
+        .reverse();
       return comics;
     }
     return [];

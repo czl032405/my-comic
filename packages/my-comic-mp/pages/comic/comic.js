@@ -39,22 +39,45 @@ Page({
   },
 
   async loadEps() {
-    this.setData({ showLoading: true });
-    let fResult = await wx.cloud.callFunction({
-      name: "comic-api",
-      data: {
-        api: this.data.api,
-        method: `eps`,
-        params: {
-          comicId: this.data.id
-        }
-      }
-    });
+    // cahced
+    let { api, id } = this.data;
+    let { data, date } = wx.getStorageSync(`${api}_${id}`) || {};
+    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 24 * 2) {
+      console.info("comic eps cached");
+      this.setData({
+        eps: data,
+        showLoading: false
+      });
+      return;
+    }
 
-    let eps = fResult.result;
-    this.setData({
-      eps,
-      showLoading: false
-    });
+    // notcached
+    try {
+      this.setData({ showLoading: true });
+      let fResult = await wx.cloud.callFunction({
+        name: "comic-api",
+        data: {
+          api: this.data.api,
+          method: `eps`,
+          params: {
+            comicId: this.data.id
+          }
+        }
+      });
+
+      let eps = fResult.result;
+      this.setData({
+        eps,
+        showLoading: false
+      });
+      wx.setStorageSync(`${api}_${id}`, { data: eps, date: new Date() });
+    } catch (error) {
+      wx.showToast({
+        title: error.message || error.errMsg || error
+      });
+      this.setData({
+        showLoading: false
+      });
+    }
   }
 });

@@ -6,11 +6,13 @@ Page({
     id: "5da89cb3a7ed463faded35fe",
     api: "pica",
     ep: "1",
+    epTitle: "",
     pages: [],
     index: 0,
     workingPages: [],
     workingIndex: 0,
-    workingPagesLength: 4
+    workingPagesLength: 4,
+    workingPagesStatus: []
   },
 
   onLoad(options) {
@@ -19,6 +21,25 @@ Page({
     this.loadPages();
   },
 
+  onImageLoad(e) {
+    console.info("success", e.target.id);
+    let id = e.target.id;
+    let index = this.data.workingPages.findIndex(p => p == id);
+    let key = `workingPagesStatus[${index}]`;
+    this.setData({
+      [key]: "success"
+    });
+  },
+
+  onImageError(e) {
+    console.info("error");
+    let id = e.target.id;
+    let index = this.data.workingPages.findIndex(p => p == id);
+    let key = `workingPagesStatus[${index}]`;
+    this.setData({
+      [key]: "error"
+    });
+  },
   setPicaProgress() {
     let pica_progress = wx.getStorageSync(this.data.api) || {};
     pica_progress[this.data.id] = {
@@ -29,29 +50,40 @@ Page({
   },
 
   async loadPages() {
-    this.setData({ showLoading: true });
-    let { id, ep } = this.data;
-    let fResult = await wx.cloud.callFunction({
-      name: "comic-api",
-      data: {
-        api: this.data.api,
-        method: `pages`,
-        params: {
-          comicId: id,
-          epId: ep
+    try {
+      this.setData({ showLoading: true });
+      let { id, ep } = this.data;
+      let fResult = await wx.cloud.callFunction({
+        name: "comic-api",
+        data: {
+          api: this.data.api,
+          method: `pages`,
+          params: {
+            comicId: id,
+            epId: ep
+          }
         }
-      }
-    });
+      });
 
-    let pages = fResult.result.map(r => r.url);
+      let pages = fResult.result.map(r => r.url);
 
-    this.setData({
-      showLoading: false,
-      workingIndex: 0,
-      pages
-    });
+      this.setData({
+        showLoading: false,
+        workingIndex: 0,
+        pages
+      });
 
-    this.onSwiperChange({ detail: { current: 0 } });
+      this.onSwiperChange({ detail: { current: 0 } });
+    } catch (error) {
+      console.error(error);
+      debugger;
+      wx.showToast({
+        title: error.message || error.stack || error
+      });
+      this.setData({
+        showLoading: false
+      });
+    }
   },
 
   onSwiperChange(event) {
@@ -103,12 +135,22 @@ Page({
     let workingKey = `workingPages[${workingIndex}]`;
     let preloadWorkingKey = `workingPages[${preloadWorkingIndex}]`;
     let preloadWorkingKey2 = `workingPages[${preloadWorkingIndex2}]`;
+    let workingStatusKey = `workingPagesStatus[${workingIndex}]`;
+    let preloadworkingStatusKey = `workingPagesStatus[${preloadWorkingIndex}]`;
+    let preloadworkingStatusKey2 = `workingPagesStatus[${preloadWorkingIndex2}]`;
+
+    console.info(this.data[workingKey]);
+    console.info(pages[index]);
+
     this.setData({
       workingIndex: current,
       index,
       [workingKey]: pages[index],
       [preloadWorkingKey]: pages[preloadIndex],
-      [preloadWorkingKey2]: pages[preloadIndex2]
+      [preloadWorkingKey2]: pages[preloadIndex2],
+      [workingStatusKey]: this.data.workingPages[workingIndex] != pages[index] ? "loading" : this.data.workingPagesStatus[workingIndex],
+      [preloadworkingStatusKey]: this.data.workingPages[preloadWorkingIndex] != pages[preloadIndex] ? "loading" : this.data.workingPagesStatus[preloadWorkingIndex],
+      [preloadworkingStatusKey2]: this.data.workingPages[preloadWorkingIndex2] != pages[preloadIndex2] ? "loading" : this.data.workingPagesStatus[preloadWorkingIndex2]
     });
 
     this.setPicaProgress();
