@@ -3,12 +3,14 @@ import { BaseComicApi } from "./apis/api.base";
 import { PicaComicApi } from "./apis/pica";
 import { PingccComicApi } from "./apis/pingcc";
 import * as cloud from "wx-server-sdk";
+import { MangabzComicApi } from "./apis/mangabz";
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 
 export async function main(event, context) {
+  console.info(event);
   try {
     const { api = "", method = "", params = {} } = event;
     let Api: BaseComicApi = undefined;
@@ -18,6 +20,9 @@ export async function main(event, context) {
         break;
       case "pingcc":
         Api = new PingccComicApi();
+        break;
+      case "mangabz":
+        Api = new MangabzComicApi();
         break;
       default:
         throw new Error("api name required");

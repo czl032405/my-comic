@@ -50,9 +50,23 @@ Page({
   },
 
   async loadPages() {
+    let { id, ep, api } = this.data;
+    // cahced
+    let { data, date } = wx.getStorageSync(`${api}_${id}_${ep}`) || {};
+    if (+new Date() - +new Date(date) < 1000 * 60 * 60 * 24 * 2) {
+      console.info("comic pages cached");
+
+      this.setData({
+        showLoading: false,
+        workingIndex: 0,
+        pages: data
+      });
+      this.onSwiperChange({ detail: { current: 0 } });
+      return;
+    }
+
     try {
       this.setData({ showLoading: true });
-      let { id, ep } = this.data;
       let fResult = await wx.cloud.callFunction({
         name: "comic-api",
         data: {
@@ -74,6 +88,7 @@ Page({
       });
 
       this.onSwiperChange({ detail: { current: 0 } });
+      wx.setStorageSync(`${api}_${id}_${ep}`, { data: pages, date: new Date() });
     } catch (error) {
       console.error(error);
       debugger;

@@ -42,9 +42,12 @@ export abstract class BaseComicApi {
         url: "https://my-comic.herokuapp.com/proxy",
         data: options
       });
+      console.info(`Response ${options.url} Proxy ${proxy}`, res.data);
+
       return res;
     } else {
       let res = await Axios(options);
+      console.info(`Response ${options.url} Proxy ${proxy}`, res.data);
       return res;
     }
   }

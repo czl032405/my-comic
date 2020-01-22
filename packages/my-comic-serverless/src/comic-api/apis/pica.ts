@@ -133,7 +133,7 @@ export class PicaComicApi extends BaseComicApi {
           author: doc.author,
           finished: doc.finished,
           thumb: this.getProxyImageUrl(`${doc.thumb.fileServer}/static/${doc.thumb.path}`),
-          updated_at: undefined
+          updatedAt: undefined
         };
       });
     } else {
@@ -148,7 +148,7 @@ export class PicaComicApi extends BaseComicApi {
           author: doc.author,
           finished: doc.finished,
           thumb: this.getProxyImageUrl(`${doc.thumb.fileServer}/static/${doc.thumb.path}`),
-          updated_at: undefined
+          updatedAt: undefined
         };
       });
     }
@@ -176,7 +176,7 @@ export class PicaComicApi extends BaseComicApi {
             epId: doc.order,
             comicId,
             title: doc.title,
-            updated_at: doc.updated_at
+            updatedAt: doc.updated_at
           };
         })
       );

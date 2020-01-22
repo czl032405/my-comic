@@ -22,7 +22,7 @@ export class PingccComicApi extends BaseComicApi {
             author: l.author,
             thumb: l.cover,
             finished: undefined,
-            updated_at: undefined
+            updatedAt: undefined
           };
         })
         .reverse();
@@ -43,7 +43,7 @@ export class PingccComicApi extends BaseComicApi {
           comicId,
           epId: i.url,
           title: i.num,
-          updated_at: undefined
+          updatedAt: undefined
         };
       })
       .reverse();

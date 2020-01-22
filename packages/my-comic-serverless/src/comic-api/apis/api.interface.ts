@@ -5,14 +5,14 @@ export interface ComicDoc {
   author: string;
   thumb: string;
   finished: boolean;
-  updated_at: Date;
+  updatedAt: Date;
 }
 
 export interface EpDoc {
   comicId: string;
   epId: string;
   title: string;
-  updated_at: Date;
+  updatedAt: Date;
 }
 
 export interface PageDoc {

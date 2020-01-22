@@ -1,23 +1,28 @@
 <view>
   <view>
-    <mp-cells title='mangabz'>
+    <mp-cells>
       <mp-cell>
-        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="searchMangabz"></input>
+        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="search"></input>
+        <view slot='footer'>
+          <picker bindchange="onSearchPick" mode="selector" value='{{searchApiIndex}}' range="{{searchRange}}" style='display:flex;align-items:center;height:50rpx'>
+            <button size='mini' style='height:50rpx;color:grey;background:white'>
+              {{searchRange[searchApiIndex]}}
+            </button>
+          </picker>
+        </view>
       </mp-cell>
     </mp-cells>
   </view>
   <view>
-    <mp-cells title='聚合pingcc'>
-      <mp-cell>
-        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="searchPingcc"></input>
-      </mp-cell>
+    <mp-cells title='mangabz'>
+      <mp-cell link hover value="人氣推薦" url="/pages/comics/comics?c=人氣推薦&api=mangabz"></mp-cell>
+      <mp-cell link hover value="熱度排行" url="/pages/comics/comics?c=熱度排行&api=mangabz"></mp-cell>
+      <mp-cell link hover value="編輯推薦" url="/pages/comics/comics?c=編輯推薦&api=mangabz"></mp-cell>
+      <mp-cell link hover value="上升最快" url="/pages/comics/comics?c=上升最快&api=mangabz"></mp-cell>
     </mp-cells>
   </view>
   <view>
     <mp-cells title="pica">
-      <mp-cell>
-        <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="searchPica"></input>
-      </mp-cell>
       <mp-cell link hover value="禁書目錄" url="/pages/comics/comics?c=禁書目錄&api=pica"></mp-cell>
       <mp-cell link hover value="大家都在看" url='/pages/comics/comics?c=大家都在看&api=pica'></mp-cell>
       <mp-cell link hover value="官方都在看" url='/pages/comics/comics?c=官方都在看&api=pica'></mp-cell>

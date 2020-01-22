@@ -11,6 +11,9 @@
   "dependencies": {
     "wx-server-sdk": "latest",
     "axios": "^0.19.1",
+    "cheerio": "^1.0.0-rc.3",
+    "moment": "^2.24.0",
+    "promise-pool-tool": "^1.2.1",
     "uuid": "^3.3.3"
   }
 }

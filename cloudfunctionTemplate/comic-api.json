@@ -1,0 +1,23 @@
+[
+  {
+    "name": "mangabz eps",
+    "value": {
+      "api": "mangabz",
+      "method": "eps",
+      "params": {
+        "comicId": "207bz"
+      }
+    }
+  },
+  {
+    "name": "mangabz pages",
+    "value": {
+      "api": "mangabz",
+      "method": "pages",
+      "params": {
+        "comicId": "207bz",
+        "epId": "m26073"
+      }
+    }
+  }
+]

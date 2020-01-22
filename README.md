@@ -15,6 +15,16 @@ Heroku App, NestJS, 代理接口、代理下载图片
 - [ ] mangabz
 - [ ] auto testing
 
+## magabz images
+
+1. http://www.mangabz.com/m94617-p3/
+   -> MANGABZ_CID / COMIC_MID / MANGABZ_VIEWSIGN / MANGABZ_VIEWSIGN_DT
+2. http://www.mangabz.com/m94617-p3/chapterimage.ashx?cid=94617&page=3&key=&_cid=94617&_mid=73&_dt=2020-01-21+20%3A33%3A10&_sign=c12f486d7f8b3c4e1058561b9b56baf9
+   eval
+   ....
+
+3.
+
 ## project commands
 
 ```s

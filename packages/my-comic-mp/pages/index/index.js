@@ -2,7 +2,9 @@ const app = getApp();
 
 Page({
   data: {
-    showSearch: false
+    showSearch: false,
+    searchApiIndex: 2,
+    searchRange: ["pica", "pingcc", "mangabz"]
   },
 
   async onLoad() {
@@ -23,27 +25,18 @@ Page({
     console.info(result);
   },
 
-  searchPica(e) {
-    console.info(e);
-    let k = e.detail.value;
-    wx.navigateTo({
-      url: `/pages/comics/comics?k=${k}&api=pica`
+  onSearchPick(e) {
+    let index = e.detail.value;
+    this.setData({
+      searchApiIndex: index
     });
   },
 
-  searchPingcc(e) {
+  search(e) {
     console.info(e);
     let k = e.detail.value;
     wx.navigateTo({
-      url: `/pages/comics/comics?k=${k}&api=pingcc`
-    });
-  },
-
-  searchMangabz() {
-    console.info(e);
-    let k = e.detail.value;
-    wx.navigateTo({
-      url: `/pages/comics/comics?k=${k}&api=mangabz`
+      url: `/pages/comics/comics?k=${k}&api=${this.data.searchRange[this.data.searchApiIndex]}`
     });
   }
 });
