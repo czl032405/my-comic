@@ -4,13 +4,15 @@ Page({
   data: {
     showLoading: false,
     id: "5da89cb3a7ed463faded35fe",
+    title: "",
+    thumb: "",
     api: "pica",
     eps: [],
     currentEp: -1,
     currentIndex: 0
   },
 
-  onLoad(options) {
+  async onLoad(options) {
     console.info(options.id);
     console.info("comic.load");
 
@@ -25,6 +27,7 @@ Page({
     // }
 
     this.loadEps();
+    this.addHistory();
   },
 
   onShow() {
@@ -78,6 +81,21 @@ Page({
       this.setData({
         showLoading: false
       });
+    }
+  },
+
+  addHistory() {
+    try {
+      let history = wx.getStorageSync("history") || [];
+      history = history.filter(c => c.comicId != this.data.id);
+      history.unshift({
+        comicId: this.data.id,
+        title: this.data.title,
+        thumb: this.data.thumb
+      });
+      wx.setStorageSync("history", history);
+    } catch (error) {
+      wx.setStorageSync("history", []);
     }
   }
 });

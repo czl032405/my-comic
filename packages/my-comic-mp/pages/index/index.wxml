@@ -14,6 +14,11 @@
     </mp-cells>
   </view>
   <view>
+    <mp-cells title='My'>
+      <mp-cell link hover value="历史记录" url="/pages/comics/comics?c=history"></mp-cell>
+    </mp-cells>
+  </view>
+  <view>
     <mp-cells title='mangabz'>
       <mp-cell link hover value="人氣推薦" url="/pages/comics/comics?c=人氣推薦&api=mangabz"></mp-cell>
       <mp-cell link hover value="熱度排行" url="/pages/comics/comics?c=熱度排行&api=mangabz"></mp-cell>

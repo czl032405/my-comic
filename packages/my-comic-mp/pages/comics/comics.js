@@ -15,7 +15,18 @@ Page({
     console.info("comics.load", options);
     let { t, c, k, api } = options;
     this.setData(Object.assign(this.data, { api, t, c, k }));
-    this.loadComics();
+    if (c == "history") {
+      this.loadHistory();
+    } else {
+      this.loadComics();
+    }
+  },
+
+  async loadHistory() {
+    let history = wx.getStorageSync("history") || [];
+    this.setData({
+      comics: history
+    });
   },
 
   /**

@@ -18,7 +18,7 @@ App({
 
     let storage = wx.getStorageSync("clear_token") || {};
     let { date } = storage;
-    if (!date || +new Date() - +new Date(date) > 1000 * 60 * 60 * 24 * 5) {
+    if (!date || +new Date() - +new Date(date) > 1000 * 60 * 60 * 24 * 30) {
       wx.clearStorageSync();
       wx.setStorageSync("clear_token", { date: new Date() });
     }
