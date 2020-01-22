@@ -8,10 +8,14 @@ export class MangabzComicApi extends BaseComicApi {
   async comics(params: { c?: string; s?: string; t?: string; k?: string; page?: number }): Promise<ComicDoc[]> {
     let { c, s, t, k, page } = params;
     if (k) {
-      let url = `http://www.mangabz.com/search?title=${k}&page=1`;
+      let url = `http://www.mangabz.com/search`;
       let res = await Axios({
         url,
-        method: "GET"
+        method: "GET",
+        params: {
+          title: k,
+          page: 1
+        }
       });
       let $ = cheerio.load(res.data);
       let result = $(".mh-item")

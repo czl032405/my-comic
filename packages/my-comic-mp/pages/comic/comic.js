@@ -91,7 +91,8 @@ Page({
       history.unshift({
         comicId: this.data.id,
         title: this.data.title,
-        thumb: this.data.thumb
+        thumb: this.data.thumb,
+        api: this.data.api
       });
       wx.setStorageSync("history", history);
     } catch (error) {
