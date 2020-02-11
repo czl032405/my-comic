@@ -5,6 +5,7 @@ import * as uuidv4 from "uuid/v4";
 import Axios, { Method, AxiosRequestConfig } from "axios";
 import * as qs from "querystring";
 import * as cloud from "wx-server-sdk";
+import { PromisePool } from "promise-pool-tool";
 export class PicaComicApi extends BaseComicApi {
   private domain = "https://picaapi.picacomic.com";
   private secretKey = "~d}$Q7$eIni=V)9\\RK/P.RM4;9[7|@/CA}b~OW!3?EV`:<>M7pddUBL5n|0/*Cn";
@@ -123,9 +124,16 @@ export class PicaComicApi extends BaseComicApi {
     let { c, s, t, k } = params;
     if (k) {
       let url = `comics/advanced-search`;
-      let response = await this.request({ url, method: "POST", params: { page: 1 }, data: { keyword: k, sort: s } });
-      let result = response.data;
-      return result.data.comics.docs.map(doc => {
+      let tasks = Array.from({ length: 2 }).map((empty, index) => async () => {
+        let response = await this.request({ url, method: "POST", params: { page: index + 1 }, data: { keyword: k, sort: s } });
+        let result = response.data;
+        let docs: any[] = result.data.comics.docs;
+        return docs;
+      });
+      let pool = new PromisePool(tasks, { concurrency: 5 });
+      let result = await pool.start();
+
+      return [].concat(...result).map(doc => {
         return {
           comicId: doc._id,
           api: "pica",
@@ -138,9 +146,16 @@ export class PicaComicApi extends BaseComicApi {
       });
     } else {
       let url = "comics";
-      let response = await this.request({ url, method: "GET", params });
-      let result = response.data;
-      return result.data.comics.docs.map(doc => {
+      let tasks = Array.from({ length: 2 }).map((empty, index) => async () => {
+        let response = await this.request({ url, method: "GET", params: { page: index + 1, c, s, t, k } });
+        let result = response.data;
+        let docs: any[] = result.data.comics.docs;
+        return docs;
+      });
+      let pool = new PromisePool(tasks, { concurrency: 5 });
+      let result = await pool.start();
+
+      return [].concat(...result).map(doc => {
         return {
           comicId: doc._id,
           api: "pica",

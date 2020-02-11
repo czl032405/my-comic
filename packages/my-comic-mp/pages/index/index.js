@@ -38,5 +38,7 @@ Page({
     wx.navigateTo({
       url: `/pages/comics/comics?k=${k}&api=${this.data.searchRange[this.data.searchApiIndex]}`
     });
-  }
+  },
+
+  onShareAppMessage(ops) {}
 });
