@@ -7,10 +7,10 @@ import { HHIMMComic } from "./apis/hhimm";
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV,
+  traceUser: true,
 });
 
 export async function main(event, context) {
-  console.info(event);
   try {
     const { api = "", method = "", params = {} } = event;
     let Api: BaseComicApi = undefined;
@@ -55,10 +55,13 @@ export async function main(event, context) {
         if (!result) {
           result = await Api.pages(params.comicId, params.epId);
           if (params.comicTitle && params.epTitle) {
+            const wxContext = cloud.getWXContext();
+            const OPENID = wxContext.OPENID;
             comicCollection.add({
               data: {
                 _id: key,
                 pages: result,
+                OPENID: OPENID,
               },
             });
           }
