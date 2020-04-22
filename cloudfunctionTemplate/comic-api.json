@@ -19,5 +19,25 @@
         "epId": "m26073"
       }
     }
+  },
+  {
+    "name": "comics",
+    "value": {
+      "api": "hhimm",
+      "method": "comics",
+      "params": {
+        "k": "被束缚的芬尼尔"
+      }
+    }
+  },
+  {
+    "name": "comics-c",
+    "value": {
+      "api": "hhimm",
+      "method": "comics",
+      "params": {
+        "c": "newrating"
+      }
+    }
   }
 ]

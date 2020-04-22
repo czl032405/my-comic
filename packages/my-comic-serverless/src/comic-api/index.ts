@@ -1,12 +1,13 @@
+import * as cloud from "wx-server-sdk";
 import Axios from "axios";
 import { BaseComicApi } from "./apis/api.base";
 import { PicaComicApi } from "./apis/pica";
 import { PingccComicApi } from "./apis/pingcc";
-import * as cloud from "wx-server-sdk";
 import { MangabzComicApi } from "./apis/mangabz";
+import { HHIMMComic } from "./apis/hhimm";
 
 cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV
+  env: cloud.DYNAMIC_CURRENT_ENV,
 });
 
 export async function main(event, context) {
@@ -23,6 +24,9 @@ export async function main(event, context) {
         break;
       case "mangabz":
         Api = new MangabzComicApi();
+        break;
+      case "hhimm":
+        Api = new HHIMMComic();
         break;
       default:
         throw new Error("api name required");

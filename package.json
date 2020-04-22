@@ -5,6 +5,7 @@
     "lerna": "^3.20.2"
   },
   "scripts": {
+    "postinstall": "lerna bootstrap",
     "dev:server": "lerna run --scope *server  dev --parallel",
     "dev:serverless": "lerna run --scope *serverless  dev --parallel",
     "build:server": "lerna run --scope *server  dev --parallel",
