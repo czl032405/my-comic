@@ -12,6 +12,7 @@ Heroku App, NestJS, 代理接口、代理下载图片
 
 ## todo
 
+- [ ] cache
 - [x] PICA
 - [x] PINGCC
 - [x] MANGABZ

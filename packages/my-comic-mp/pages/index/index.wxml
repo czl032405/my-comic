@@ -10,9 +10,8 @@
           </picker>
         </view>
         <view>
-          <input  style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="search"></input>
+          <input style='border:1px solid rgba(0,0,0,0.2);border-radius:8rpx' type="text" confirm-type="search" placeholder="搜索.." bindconfirm="search"></input>
         </view>
-       
       </mp-cell>
     </mp-cells>
   </view>
@@ -21,7 +20,7 @@
       <mp-cell link hover value="历史记录" url="/pages/comics/comics?c=history"></mp-cell>
     </mp-cells>
   </view>
-   <view>
+  <view>
     <mp-cells title='hhimm'>
       <mp-cell link hover value="全站搜索最近刷新的漫画 TOP100" url="/pages/comics/comics?c=newrating&api=hhimm"></mp-cell>
       <mp-cell link hover value="最多人看的漫画 TOP100" url="/pages/comics/comics?c=hotrating&api=hhimm"></mp-cell>

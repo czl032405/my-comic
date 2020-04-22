@@ -1,5 +1,4 @@
 import * as cloud from "wx-server-sdk";
-import Axios from "axios";
 import { BaseComicApi } from "./apis/api.base";
 import { PicaComicApi } from "./apis/pica";
 import { PingccComicApi } from "./apis/pingcc";
@@ -41,7 +40,30 @@ export async function main(event, context) {
         result = await Api.eps(params.comicId);
         break;
       case "pages":
-        result = await Api.pages(params.comicId, params.epId);
+        const db = cloud.database();
+        const comicCollection = db.collection(`my-comic-${api}`);
+        let key = `${params.comicTitle} - ${params.epTitle}`;
+        if (params.comicTitle && params.epTitle) {
+          let res = await comicCollection
+            .where({
+              _id: key,
+            })
+            .get();
+
+          result = res.data[0] && res.data[0].pages;
+        }
+        if (!result) {
+          result = await Api.pages(params.comicId, params.epId);
+          if (params.comicTitle && params.epTitle) {
+            comicCollection.add({
+              data: {
+                _id: key,
+                pages: result,
+              },
+            });
+          }
+        }
+
         break;
       default:
         throw new Error("method name required");
