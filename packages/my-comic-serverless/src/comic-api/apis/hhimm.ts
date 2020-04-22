@@ -26,7 +26,7 @@ export class HHIMMComic extends BaseComicApi {
           let href = $(ele).attr("href");
           let title = $(ele).attr("title");
           let thumb = $("img", ele).attr("src");
-          let comicIdMatch = href.match(/\/(.*?)\.html/);
+          let comicIdMatch = href.match(/\/([^/]*?)\.html/);
           let comicId = comicIdMatch && comicIdMatch[1];
 
           return {
@@ -57,7 +57,7 @@ export class HHIMMComic extends BaseComicApi {
           let href = $("a", ele).eq(0).attr("href");
           let title = $(".cComicTitle", ele).text().trim();
           let thumb = $("img", ele).eq(0).attr("src");
-          let comicIdMatch = href.match(/\/(.*?)\.html/);
+          let comicIdMatch = href.match(/\/([^/]*?)\.html/);
           let comicId = comicIdMatch && comicIdMatch[1];
 
           return {
@@ -91,7 +91,10 @@ export class HHIMMComic extends BaseComicApi {
         let title = $("a", ele).attr("title").trim();
         let url = $("a", ele).attr("href");
         let epIdMatch = url.match(/\/(.*?)\//);
+        let sMatch = url.match(/s=([^&?]*)/);
         let epId = epIdMatch && epIdMatch[1];
+        let s = (sMatch && sMatch[1]) || 7;
+        epId = `${epId}-${s}`;
         return {
           comicId,
           title,
@@ -105,7 +108,9 @@ export class HHIMMComic extends BaseComicApi {
   }
 
   async pages(comicId: string, epId: string): Promise<PageDoc[]> {
-    let geturl = (pageNo) => `http://www.hhimm.com/${epId}/${pageNo}.html?s=7&d=0`;
+    let s = /-/.test(epId) ? epId.split("-")[1] : 7;
+    epId = epId.split("-")[0];
+    let geturl = (pageNo) => `http://www.hhimm.com/${epId}/${pageNo}.html?s=${s}&d=0`;
     let res = await Axios({
       url: geturl(1),
       method: "GET",
