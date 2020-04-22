@@ -79,6 +79,7 @@ export class HHIMMComic extends BaseComicApi {
 
   async eps(comicId: string): Promise<EpDoc[]> {
     let url = `http://www.hhimm.com/manhua/${comicId}.html`;
+    console.info(url);
     let res = await Axios({
       url,
       method: "GET",

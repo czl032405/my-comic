@@ -5,7 +5,7 @@
         <view>
           <picker bindchange="onSearchPick" mode="selector" value='{{searchApiIndex}}' range="{{searchRange}}" style='display:flex;align-items:center; '>
             <button size='mini' style='color:grey;background:white;padding:0;'>
-              {{searchRange[searchApiIndex]}}
+              {{searchRange[searchApiIndex]}} ↓
             </button>
           </picker>
         </view>

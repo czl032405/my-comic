@@ -3,7 +3,7 @@ const app = getApp();
 Page({
   data: {
     showSearch: false,
-    searchApiIndex: 2,
+    searchApiIndex: 3,
     searchRange: ["pica", "pingcc", "mangabz", "hhimm"],
   },
 
