@@ -109,7 +109,7 @@ Page({
   onSwiperChange(event) {
     let { current } = event.detail;
     let { workingIndex, workingPages, pages, index } = this.data;
-    let movedIndex = current - workingIndex; //1 -1 2 -2
+    let movedIndex = current - workingIndex; //1 -1 3 -3
     let preloadIndex = null;
     let preloadWorkingIndex = null;
     let preloadIndex2 = null;
@@ -125,6 +125,7 @@ Page({
       preloadWorkingIndex = (workingIndex + 1 + workingPagesLength) % workingPagesLength;
       preloadIndex2 = (index + 2 + pages.length) % pages.length;
       preloadWorkingIndex2 = (workingIndex + 2 + workingPagesLength) % workingPagesLength;
+      // todo 最后一页阻止滑动?
     }
     // prev
     else if (movedIndex == -1 || movedIndex == workingPagesLength - 1) {
