@@ -138,7 +138,7 @@ export class HHIMMComic extends BaseComicApi {
       let $ = cheerio.load(html);
       let curr = $("#img1021").attr("name") || $("#img2391").attr("name") || $("#img7652").attr("name") || $("#imgCurr").attr("name") || "";
       let next = $("#hdNextImg").val() || "";
-      return [domain + this.unsuan(curr), domain + this.unsuan(next)];
+      return [curr && domain + this.unsuan(curr), next && domain + this.unsuan(next)].filter(Boolean);
     });
     let pool = new PromisePool(tasks, { concurrency: 20 });
     let imagePairs = await pool.start();
